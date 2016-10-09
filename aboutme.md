@@ -1,28 +1,4 @@
-<!doctype html5>
-<html lang="en">
-<head>
-	<meta author="Luca"></meta>
-	<!-- 
-	Made by Anirudh Katoch
-	2016, All rights reserved.
-	-->
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
-	<title>Luca's Trove</title>
-</head>
-<body>
-<topbar>
-    <item><a href="index.html">About me</a></item>
-    <item><a href="portfolio.html">Portfolio</a></item>
-    <menu name="Projects">
-        <item><a href="#">Ash</a></item>
-        <item><a href="#">BakaGaijin</a></item>
-        <item><a href="#">FOSSEE</a></item>
-    </menu>
-<!--     <item><a href="rants.html">Banter</a></item> -->
-    <item><a href="contact.html">Contact</a></item>
-    <item><small>(Powered by <a href="http://strapdownjs.com/">StrapDown.js</a> + <a href="https://github.com/joedf/strapdown-topbar">topbar</a>)</small></item>
-</topbar>
-<xmp theme="cyborg" src="anime.log">
+$(fromMD([==[
 About me
 ========
 I'm Anirudh Katoch, an undergraduate student at Manipal Institute of Technology, Manipal. Currently persuing a
@@ -127,11 +103,6 @@ nights writing code for [bakaGaijin]() and [Ash](). I learnt how to perfectly an
 technical things) during my [HP]() internship. I have also collected a lot of [anime](anime.log) at this point.
 
 If you actually read all of that then I applaud your patience.  
-Maybe you want to read about my [creations](projects.html)? Or perhaps [contact me](contact.html)? Or have a look at
+Maybe you want to read about my [creations](projects/main.html)? Or perhaps [contact me](contact.html)? Or have a look at
 a more formal and descriptive [portfolio](portfolio.html)?
-</xmp>
-</body>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/strapdown-topbar/1.6.4/strapdown-topbar.min.js"></script>
-<script src="logo.js"></script>
-</html>
+]==]))
