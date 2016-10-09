@@ -99,10 +99,10 @@ After that I entered college, and that is where this story `yeild`s. I have met 
 roommates are a math/physics buff + mad guitarist Arjit Seth, and writing prodigy + very sane guitarist Rahul Basu. I
 also networked and worked with some amazing people at [IECSE](https://www.iecsemanipal.com/). I spent some very
 memorable weeks interning with some insanely talented people at IIT Bombay under [FOSSEE](http://fossee.in/). I spent many sleepless
-nights writing code for [bakaGaijin]() and [Ash](). I learnt how to perfectly and crisply iron a shirt (among more
+nights writing code for [bakaGaijin](projects.html) and [Ash](projects.html). I learnt how to perfectly and crisply iron a shirt (among more
 technical things) during my [HP]() internship. I have also collected a lot of [anime](anime.log) at this point.
 
 If you actually read all of that then I applaud your patience.  
-Maybe you want to read about my [creations](projects/main.html)? Or perhaps [contact me](contact.html)? Or have a look at
+Maybe you want to read about my [creations](projects.html)? Or perhaps [contact me](contact.html)? Or have a look at
 a more formal and descriptive [portfolio](portfolio.html)?
 ]==]))
