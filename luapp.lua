@@ -1,6 +1,6 @@
 safe_lookup = {}
 do
-  local metamta = require("ppstuff")
+  local metamta = require("template")
   if not metamta or not type(metamta)=="table" then
     print("metamta.lua not found")
   else

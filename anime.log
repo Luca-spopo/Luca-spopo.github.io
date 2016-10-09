@@ -1,4 +1,5 @@
-$luca@BOB> ls -R /c/anime
+$luca@BOB> cd /c/mistakes
+$luca@BOB> ls -R .
 .:
 ~Movies/
 Akame ga Kill/

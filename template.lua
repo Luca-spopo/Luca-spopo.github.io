@@ -32,44 +32,7 @@ __index = function(t, k)
 end
 })
 
---[[
-Sample page:
-
-<!doctype html5>
-<html lang="en">
-<head>
-	<meta author="Luca"></meta>
-	<!-- 
-	Made by Anirudh Katoch
-	2016, All rights reserved.
-	-->
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
-	<title>Luca's Trove</title>
-</head>
-<body>
-<topbar>
-    <item><a href="index.html">About me</a></item>
-    <item><a href="portfolio.html">Portfolio</a></item>
-    <menu name="Projects">
-        <item><a href="#">Ash</a></item>
-        <item><a href="#">BakaGaijin</a></item>
-        <item><a href="#">FOSSEE</a></item>
-    </menu>
-<!--     <item><a href="rants.html">Banter</a></item> -->
-    <item><a href="contact.html">Contact</a></item>
-    <item><small>(Powered by <a href="http://strapdownjs.com/">StrapDown.js</a> + <a href="https://github.com/joedf/strapdown-topbar">topbar</a>)</small></item>
-</topbar>
-<xmp theme="cyborg">
-MARKDOWN
-</xmp>
-</body>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/strapdown-topbar/1.6.4/strapdown-topbar.min.js"></script>
-<script src="logo.js"></script>
-</html>
-]]
-
-G.fromMD = function(text)
+fromMD = function(text)
 	return [==[
 <!doctype html5>
 <html lang="en">
@@ -90,19 +53,21 @@ G.fromMD = function(text)
         <item><a href="#">Ash</a></item>
         <item><a href="#">BakaGaijin</a></item>
         <item><a href="#">FOSSEE</a></item>
+        <item></item>
+        <item><a href="projects.html">Show all</a></item>
     </menu>
 <!--     <item><a href="rants.html">Banter</a></item> -->
     <item><a href="contact.html">Contact</a></item>
     <item><small>(Powered by <a href="http://strapdownjs.com/">StrapDown.js</a> + <a href="https://github.com/joedf/strapdown-topbar">topbar</a>)</small></item>
 </topbar>
-<xmp theme="cyborg">]==]
+<textarea theme="simplex">]==]
 	..text
 	..[==[
-</xmp>
+</textarea>
 </body>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+<script src="strapdown-gh-pages/v/0.2/strapdown.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/strapdown-topbar/1.6.4/strapdown-topbar.min.js"></script>
-<script src="logo.js"></script>
+<script src="post.js"></script>
 </html>
 	]==]
 end

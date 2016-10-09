@@ -1,27 +1,28 @@
 $(fromMD([==[
+
+```
+$luca@BOB> whoami
+```
+
 About me
 ========
-I'm Anirudh Katoch, an undergraduate student at Manipal Institute of Technology, Manipal. Currently persuing a
-B.Tech in Information Technology.  
-I have a passion for creating things and solving problems (in equal parts). I have found that I am best suited for
-creating through technology.  
-Some people prefer to call me Luca, which is my online handle.
+I'm Anirudh Katoch, an undergraduate student at Manipal Institute of Technology, Manipal. Currently pursuing a
+B.Tech in Information Technology.  I have a passion for creating things and solving problems (in equal parts). I have found that I am best suited for
+creating through technology.  Some people prefer to call me Luca, which is my online handle.
 
 Use the navigation bar above to view my projects or portfolio.
 
 >Hobbies?
 
-singing, coding, thinking, sleeping, anime, manga
+Singing, swimming, gaming, football, coding, thinking, sleeping, anime, manga
 
-I am also interested in math, physics, reading and writing.  
-But I've not invested enough time in them to be able to call them hobbies.  
-_I'll find the time eventually._
+I am also interested in math, physics, reading and writing.  But I've not invested enough time in them to be able to call them hobbies.  _I'll find the time eventually._
 
 >Vices?
 
 Coffee addict
 
->Favourite book?
+>Favorite book?
 
 I haven't read a lot of books, but Hitchhiker's Guide To The Galaxy was great.
 
@@ -33,13 +34,13 @@ Highly adaptable.
 
 One that lets me be creative and helps me grow.
 
->Stengths?
+>Strengths?
 
-This may sound funny but I think I'm good at _thinking_.
+This may sound funny but I think I'm good at thinking.
 
 >Weakness?
 
-Most of my personal projects have had no time bound, so I have used them as learning oppurtunities, instead of
+Most of my personal projects have had no time bound, so I have used them as learning opportunities, instead of
 aiming to complete them.
 
 i.e. _overengineering_
@@ -54,7 +55,7 @@ Invest and grow. Life is like farmville.
 
 >Tell me everything
 
-(TL;DR)<sup>-1</sup>
+(TL;DR)<sup>-1<sup>
 -----------
 My early childhood revolved around extreme boredom, video games and the internet. Imagine a summer vacation, now
 imagine feeling that way for a few years. This extreme boredom played out in my favour as I developed a habit of
@@ -66,12 +67,12 @@ the questions was much more impactful on my development than getting the answers
 Just as reading a good book fills some people with the desire to write, playing certain wonderful video games filled
 me with a desire to make them. I would fill notebooks with content about my favourite games, and ideas on how to
 expand on them. Perhaps I had a slight compulsion for documenting things in general, or maybe I was just bored. 
-(Speaking of which, I also religiously recorded all the pokemon songs on a tape recorder, I probably did have a thing
+(Speaking of which, I also religiously recorded all the Pokemon songs on a tape recorder, I probably did have a thing
 for documenting.)
 
 At the onset of teenage I shifted to New Delhi. My social circle got a lot larger there. As I grew older and figured
 out how the internet works, I was introduced to Macromedia FlashMX by chance. ActionScript 2 was my third language
-after Hindi and English. An embarassing number of years were then spent teaching myself how to code trivial things.
+after Hindi and English. An embarrassing number of years were then spent teaching myself how to code trivial things.
 I also picked up ActionScript 3 later on. I was also introduced to various forums, and this was my gateway to
 internet culture.
 
@@ -79,30 +80,29 @@ Eventually I stumbled upon [MTA](https://github.com/multitheftauto), a fan made,
 San Andreas that provides hooks to alter every aspect of gameplay. I joined one of the roleplay servers and then
 there is a long, tangential story of how I ended up leading an online clan (Which is somehow still alive), and then
 become a moderator, and a Lua programmer. As a staff member on an online persistent world multiplayer server with
-lots of rivals, I learnt a lot about administration, networking, databases, software architecture, project
+lots of rivals, I learned a lot about administration, networking, databases, software architecture, project
 management, bug tracking, hacking, crisis management and damage control. I also fell in love with Lua, which is still
 my language of choice.
 
 Fast forward a few years and the 11th grade school curriculum introduced me to (a very old standard of) C++. Working
-on a lower level of abstraction really cleared my concepts about computers. It made me appriciate and fully
+on a lower level of abstraction really cleared my concepts about computers. It made me appreciate and fully
 understand higher level features such as closures, type systems, runtime checking, complex types being abstracted as
 objects, garbage collection, and all those things under the hood.
 
-Around the same time, I first started using Linux. I learnt basic bash scripting and set up tiny (but useful) scripts
+Around the same time, I first started using Linux. I learned basic bash scripting and set up tiny (but useful) scripts
 that used cron to send my Minecraft server's IP to a list of friends (Before I knew how easy setting up a DDNS was),
 or remotely used the webcam to make sure things are still OK in the house while we were on vacation. The scripts were
-barely a few dozen lines long, thanks to the plathora of wonderful tools and abstractions available, but the
+barely a few dozen lines long, thanks to the plethora of wonderful tools and abstractions available, but the
 experience of gluing them together and applying them to real world problems was very educational. Eventually I would
 start browsing the [Arch wiki](https://wiki.archlinux.org/) and pick up all sorts of Linux trivia.
 
-After that I entered college, and that is where this story `yeild`s. I have met some amazing people here. My
+After that I entered college, and that is where this story `yield`s. I have met some amazing people here. My
 roommates are a math/physics buff + mad guitarist Arjit Seth, and writing prodigy + very sane guitarist Rahul Basu. I
 also networked and worked with some amazing people at [IECSE](https://www.iecsemanipal.com/). I spent some very
 memorable weeks interning with some insanely talented people at IIT Bombay under [FOSSEE](http://fossee.in/). I spent many sleepless
-nights writing code for [bakaGaijin](projects.html) and [Ash](projects.html). I learnt how to perfectly and crisply iron a shirt (among more
+nights writing code for [bakaGaijin](projects.html) and [Ash](projects.html). I learned how to perfectly and crisply iron a shirt (among more
 technical things) during my [HP]() internship. I have also collected a lot of [anime](anime.log) at this point.
 
-If you actually read all of that then I applaud your patience.  
-Maybe you want to read about my [creations](projects.html)? Or perhaps [contact me](contact.html)? Or have a look at
+If you actually read all of that then I applaud your patience.  Maybe you want to read about my [creations](projects.html)? Or perhaps [contact me](contact.html)? Or have a look at
 a more formal and descriptive [portfolio](portfolio.html)?
 ]==]))
