@@ -38,6 +38,10 @@ These themes were actually static images. The renderer would take parts of these
 
  #The Solution
 
+ ![CEGUI](assets/CEGUI3.jpg)  ![Ash](assets/ash1.jpg)  
+
+<small>CEGUI (left) vs Ash (right), don't mind the typo</small> 
+
 Ash is very flexible and skinnable. I insist that it's even more flexible and skinnable than CEGUI.
 Right now it has Panes, Input boxes, Labels, ImageBoxes, Tabs, and some other components. It's missing some basic components like check boxes, radio boxes, scroll bars etc. But the beauty is that _they can be implemented by just dragging component files into a particular folder_. Adding new themes is _also as simple as adding files to a directory_. How big would such files be? Just 50-100 lines of code. Ash already provides all the window management, the components just have to maintain their own state, add event listeners, and conform to specification.
 
@@ -192,16 +196,16 @@ And _that's it_. We now have a label. Want to give it an event handler for click
  #Ash's own Event System
 
 Who is dispatching these events? Ash is. Ash has it's own event system.
-MTA does provide it's own event system, but it is not flexible about the order in which the event are bubbled up or down by the listeners, or even if they are bubbled up first or bubbled down first.
+MTA does provide it's own event system, but it is not flexible about the order in which the events are bubbled up or down by the listeners, or even if they are bubbled up first or bubbled down first.
 Ash implements its own event system in pure Lua without relying on MTA. Ash's event system lets us _give it an iterator_ that would select which children should be bubbled to, and which should not.
 
 It gets better. On every step of the bubble, a component can choose to edit/terminate the event from bubbling further. A window may get an "Z was pressed" event from its parent. It could then look up if Z is set as a Hotkey for "close" (suppose it was). It could then EDIT the event to carry the data "Window was closed" instead of "Z was pressed". This provides a layer of abstraction to the children that are listening for events 
 
  #Not just GUI
 
-I mentioned that "Z was pressed" could come as an event to MTA.
+I mentioned that "Z was pressed" could come as an event to a component.
 Indeed, Ash is not a GUI replacement, it is a UI replacement.
-It detects every keypress, and no keypress filters through it without it's consent.
+It detects every keypress, and no keypress filters through it without its consent.
 
 MTA's input boxes had a problem long ago: You may have "Z" bound to "Throw grenade", and in such a situation if you type Z into a textbox, you may throw a grenade when you didn't mean to.
 Basically, instead of propogating input through a tree, components instead listened for input events directly and as equals.
@@ -245,11 +249,11 @@ Here is the code in Ash:
 	btn.onClick = function() btn.text = "Clicked" end
 	--Or, btn:addEventListener("onClick, function) if you have multiple listeners
 
-The syntax is much more readable, and Ash elements behave like tables instead of opaque alien objects from another VM.
+Ash elements behave like tables instead of opaque alien objects from another VM.
 
 Here is something that is not possible in CEGUI and dxGUI at all:
 
-	window:tween({x=100, y=100, alpha=0.2}, 300, callback)
+	window:tween({x=100, y=100, alpha=0.2}, 300, null, callback)
 
 `tween` is a function of AshElement that "tweens" properties of an AshElement (Very useful for animations, or fading effects, etc). I am also working on forking Ash's tweening functionaly into an independent open source project.
 The code shown here would linearly interpolate the window's X,Y to 100,100 over 300 miliseconds, while slowly making it transparent.
@@ -299,8 +303,22 @@ MTA also exposes methods to use SDL shaders with directX. I did not understand s
 
 Ash also keeps "scale" as an inherited context which is multiplied like alpha. This means entire windows can be "minimized" by literally making them smaller. Scaling like this is not availiable in other frameworks.
 
-Here is a video showing off Ash's beautiful default theme, scaling, tweening etc. All features not availiable in CEGUI or dxGUI
+ #Samples
 
+ All videos on this page are without audio.
+
+Here is a video contrasting CEGUI with Ash. It shows off how Ash benefits from having stateful renders, and some neat Ash features such as tweening. The buttons get animated when the mouse is over them.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qGYF3OFbGy8" frameborder="0" allowfullscreen></iframe>
+
+Here we can see that TextBoxes and keyboard input are fully functional in Ash. Note that the keyboard input would not get into the TextBox were it not selected. We can also see what the Default Theme's TabbedPane implementation looks like. Unlike CEGUI, tabs can take a fixed width, or take up as much space as possible. The default theme alots space based on how long the title of the tab is (Similar to Google Chrome when its full)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pVPMER9JTiI" frameborder="0" allowfullscreen></iframe>
+
+Here we see how the `scale` parameter may be used. We see more tweening, this time of position, scale and even alpha. We observe the effects of the "inherited context" an element gets as scaling, alpha and translation are propogated down to the children.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Hm0xIc35BfA" frameborder="0" allowfullscreen></iframe>
 
 Ash is closed source (and not at all mature) at this time, but I will make it open source eventually. You're going to have to wait.
+
 ]==]))
