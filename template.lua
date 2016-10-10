@@ -41,7 +41,7 @@ function TOC(param)
 <item></item>
 <item></item>
 <toc>
-]].."Contents"..[[
+]].."Table of Contents"..[[
 </toc>]]
 	end
 end
