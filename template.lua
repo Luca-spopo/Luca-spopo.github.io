@@ -32,6 +32,20 @@ __index = function(t, k)
 end
 })
 
+TOCtext = ""
+THEME = "simplex"
+
+function TOC(param)
+	if param then
+		TOCtext = [[
+<item></item>
+<item></item>
+<toc>
+]].."Contents"..[[
+</toc>]]
+	end
+end
+
 fromMD = function(text)
 	return [==[
 <!doctype html5>
@@ -50,17 +64,19 @@ fromMD = function(text)
     <item><a href="index.html">About me</a></item>
     <item><a href="portfolio.html">Portfolio</a></item>
     <menu name="Projects">
-        <item><a href="#">Ash</a></item>
-        <item><a href="#">BakaGaijin</a></item>
-        <item><a href="#">FOSSEE</a></item>
+        <item><a href="ash.html">Ash</a></item>
+        <item><a href="projects.html">BakaGaijin</a></item>
+        <item><a href="projects.html">FOSSEE</a></item>
         <item></item>
         <item><a href="projects.html">Show all</a></item>
     </menu>
 <!--     <item><a href="rants.html">Banter</a></item> -->
     <item><a href="contact.html">Contact</a></item>
-    <item><small>(Powered by <a href="http://strapdownjs.com/">StrapDown.js</a> + <a href="https://github.com/joedf/strapdown-topbar">topbar</a>)</small></item>
+    ]==]
+    ..TOCtext
+    ..[==[
 </topbar>
-<textarea theme="simplex">]==]
+<textarea theme="]==]..THEME..[==[">]==]
 	..text
 	..[==[
 </textarea>
