@@ -1,5 +1,4 @@
-$(TOC("Contents"))
-
+#TOC("Contents")
 $(fromMD([==[
 Ash
 ===

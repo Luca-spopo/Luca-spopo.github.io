@@ -65,7 +65,7 @@ fromMD = function(text)
     <item><a href="portfolio.html">Portfolio</a></item>
     <menu name="Projects">
         <item><a href="ash.html">Ash</a></item>
-        <item><a href="projects.html">BakaGaijin</a></item>
+        <item><a href="bakagaijin.html">BakaGaijin</a></item>
         <item><a href="projects.html">FOSSEE</a></item>
         <item></item>
         <item><a href="projects.html">Show all</a></item>
