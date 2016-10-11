@@ -266,9 +266,9 @@ Yet, here in the client VM, we are calling window.tween and window.addChild as f
 
 This magic is accomplished by leveraging Lua metatables and MTA's export system.
 MTA's export system only allows us to declare a function as exported when a resource is first started. But these functions being passed around are created at runtime!
-Ash assigns a number to every function/table it sends out to other VMs, and maintains a table of these functions/tables. What the other resource gets is just this unique number. It then creates an object that has its metatables set to call a static exported function (with the unique id as one of the parameters) every time it's properties are changed. Any function calls or assignment operations that use functions or tables do this exact same procedure recursively to wrap those values. Ash also makes sure it deletes in references when the only resource still using them is shut down.
+Ash assigns a number to every function/table it sends out to other VMs, and maintains a table of these functions/tables. What the other resource gets is just this unique number. It then creates an object that has its metatables set to call a static exported function (with the unique id as one of the parameters) every time it's properties are changed. Any function calls or assignment operations that use functions or tables do this exact same procedure recursively to wrap those values. Ash also makes sure it deletes any references when the only resource still using them is shut down.
 
-This magic was so useful for cross-VM communication in general that I forked it into a separate, independant open source project called bakaGaijin. Ash uses bakaGaijin to provide a seamless foreign interface.
+This magic was so useful for cross-VM communication in general that I forked it into a separate, independant open source project called [bakaGaijin](bakagaijin.html). Ash uses bakaGaijin to provide a seamless foreign interface.
 
  #Shaders, affine transforms, 3D GUI, and more
 
