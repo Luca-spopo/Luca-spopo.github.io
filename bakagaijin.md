@@ -6,7 +6,7 @@ $(fromMD( [==[
 
 bakaGaijin is an [open source](https://github.com/Luca-spopo/bakaGaijin/tree/master/bakaGaijin) (MIT License) project that emerged from the (larger and closed source) [Ash](ash.html) project.
 
-It aims to provide seamless cross resource communication accross Lua virtual machines in MTA.
+It aims to provide seamless cross resource communication across Lua virtual machines in MTA.
 
  #Some Background
 
@@ -20,21 +20,21 @@ As two different resources sit on different VMs, the only way for them to commun
 
  #Before bakaGaijin
 
-1. MTA has an element tree that is synched for every VM. Any event that is triggered on an element in one VM is also triggered in all other VMs. Elements are objects that are implemented by the C code, and can thus be transferred accross VMs as [opaque objects](https://en.wikipedia.org/wiki/Opaque_data_type).
+1. MTA has an element tree that is synched for every VM. Any event that is triggered on an element in one VM is also triggered in all other VMs. Elements are objects that are implemented by the C code, and can thus be transferred across VMs as [opaque objects](https://en.wikipedia.org/wiki/Opaque_data_type).
 
   * Elements can also contain properties (called "element data"). These are string keys mapped to tables or primitive data types. Tables stored in this way are stripped of any non-storable keys/values.
   * Functions/Threads cannot be stored as element data, and the keys cannot be anything other than strings.
   * There have also been some bugs in the past where element data was not behaving properly.
   * As such, elements and their behavior are coded in C and do not benefit from Lua's principles or from Lua's well known reliability.
   * Tables "fetched" from element data are copied by value when sent to the VM, and thus any changes made to them do not reflect on the element data until they are manually copied back. This leads to thread safety issues that need to be stepped around.
-  * MTA has an event system for these elements, and these elements form a tree that the event is propogated through.  
+  * MTA has an event system for these elements, and these elements form a tree that the event is propagated through.  
 
   Thus, element data and event handlers on elements are one way of communicating with other resources.
 
 2. MTA offers the concept of "exported" functions. A resource may declare (in its configuration files) that it is exporting certain global functions. Other resources are then allowed to call such exported functions through the syntax of `exports.remoteResourceName.functionName(exports.remoteResourceName, ...)`.
   * This changes the signature of the originally exported function, as it has an additional self parameter now.
   * The function must be declared as exported statically before the resource is loaded.
-  * The function must be global and named. Lambas and local functions arn't allowed.
+  * The function must be global and named. Lambdas and local functions aren't allowed.
   * The configuration is stored in an XML file. Nobody wants to touch the XML files.
   * The parameters and return values are still stripped of any values the C interface cannot comprehend (functions, threads, tables values/keys that are functions/threads)
   * Any tables that are returned or passed as parameters are still copied by value.
@@ -88,10 +88,10 @@ Also, let me tell you how easy it is to set up bakaGaijin. It only uses one expo
 
 ABC in resource3 and resource2 is also obviously not actual references to the table in resource1 (The C interface is incapable of that). The behavior of the handler is emulated using clever metaprogramming. Lua uses metatables for this, which is similar to "object prototypes" in other languages.
 
-So bakaGaijin has been a leaning experience in the topics of API design, metaprogramming, memory management, multithreading, and design in general.
+So bakaGaijin has been a leaning experience in the topics of API design, metaprogramming, memory management, multi-threading, and design in general.
 
 If the data exchanged in these operations is immutable and serializable, then they are sent as they are without any subsequent performance loss.
-However, if they are tables, closures, or such mutable types then they are automatically "prepared" so that they can be sent accross safely. This preparation is done by:  
+However, if they are tables, closures, or such mutable types then they are automatically "prepared" so that they can be sent across safely. This preparation is done by:  
 
   * Storing them in an internal table on the host resource (The one that sent them)
   * Sending a handle of this object to the client resource (The one that requested it)
@@ -99,7 +99,7 @@ However, if they are tables, closures, or such mutable types then they are autom
   
 Exported functions are the most performant way of introducing the concept of callback functions (but this requires preparation). The event system is a little slower, but does not require any preparation before runtime. bakaGaijin uses an exported function to communicate with other resources, but most of the code is agnostic of this and it can be easily changed to use the event system instead.
 
-bakaGaijin also has it's own "meta garbage collector" (I don't know what else to call it) that manages the deallocation of values exposed to other resources via bakaGaijin. So you do not need to worry about any memory leaks.
+bakaGaijin also has it's own "meta garbage collector" (I don't know what else to call it) that manages the deallocation of values no longer accessible to other resources via bakaGaijin. So you do not need to worry about any memory leaks.
 
 If you just want to use bakaGaijin for your own project, then check out "Test1" and "Test2" (to be run in parallel) on [GitHub](https://github.com/Luca-spopo/bakaGaijin). The source code is heavily commented and reading it cursively should be enough to understand how to use it.
 
@@ -113,14 +113,47 @@ The rest of this page explains how it works.
 
 Either the script itself, or an instance of the script running on a particular VM. An instance of bakaGaijin.lua (or its minified version) must be running on every VM that is using bakaGaijin to communicate.
 
+* expose
+* access
+
+I will make a distinction between the term "exposed" and "accessible".
+
+Consider this:
+
+	--resource1
+	local x = {y=true}
+	bakaGaijin.x = x
+
+	--then at resource2
+	local x = bakaGaijin("resource1").x
+
+	--then at resource1
+	bakaGaijin.x = nil
+	--x is not longer EXPOSED (A resource can't use bakaGaijin("resource1").x to access x)
+
+	--then at resource2
+	--x from resource1 is still ACCESSIBLE to resource2, as it already got a reference earlier.
+	print x.y --true
+	x.y = false
+
+	--but it is not EXPOSED
+	print bakaGaijin("resource1").x --nil
+
+Accessible is when a resource *can* read/write an original object exposed earlier.
+Exposed is when a resource can get the reference to the original object from the host resource using bakaGaijin.
+
 * original object
 
 If a resource exposes a value (string, function, table, number etc) using bakaGaijin, that value is the original object. In `bakaGaijin.label = x`, `x` is the original object. Only really makes sense when x is a <em>candidate for tokenization</em>.
 
+* token_id
+
+Each original object is allotted a token_id when a PT is constructed for it for the first time. There is a guarantee that no two original objects will have the same token_id at the same time. The token_id of an original object does not change as long as bakaGaijin is exposing it.
+
 *  candidate, candidate for tokenization
 
-A value that has a type that cannot be transferred accross resources without information loss.
-A value is NOT a canditate for tokenization if it is immutable and serializable.
+A value that has a type that cannot be transferred across resources without information loss.
+A value is NOT a candidate for tokenization if it is immutable and serializable.
 
 A candidate is of type `table` or `function`. Threads are also candidates, but not supported by bakaGaijin at the time of writing.
 All values of type `function` or `table` are candidates UNLESS they are an <em>AT</em>
@@ -134,40 +167,59 @@ Resource that contains the original object.
 
 * client, client resource
 
-Resouce that wishes to use an original object that it does not contain.
+Resource that wishes to use an original object that it does not contain.
 
-* primative
+* primitive
 
 Any value of type `boolean`, `number`, `string`, `nil` or `userdata`
+
+* GC
+
+Garbage collector. "GCed" means garbage collected.  
+
+Here is a joke:
+>If Java had true garbage collection it would collect itself.
 
 * AT, Active Token
 
 A value present on the client resource. Client resource uses an AT as a handler/controller to interact with original object on the host resource. An AT is always <em>interned</em>
 
-* Interned, Interning
+* interned, interning
 
 A term borrowed from Lua's [string interner](https://en.wikipedia.org/wiki/String_interning). May be a misnomer.
 
-It basically means that active tokens are cached and reused, and there is a gaurentee that one original object will only correspong to one or zero AT in a given resource.
+It basically means that active tokens are cached and reused, and there is a guarantee that one original object will only corresponding to one or zero AT in a given resource.
 
-Active tokens are interned, which means that if a a resource receives the same <em>passive token</em> again, it reuses 
+Active tokens are interned, which means that if a a resource receives the same <em>passive token</em> again, it reuses the active token already made for it.
 
-* PT
+* PT, passive token
 
-Can be transferred accross resources without information loss. Is technically also a candidate.
---Used to pass a candidate to another resource. AT is constructed from a PT at the client resource.
---candidate = table or function, but not AT
---elem = primative, AT or candidate
+1. Can be transferred across resources without information loss.
+2. Used to represent an original object
+3. Used as an intermediate representation of an original object when two resources are communicating via bakaGaijin.
+4. AT is constructed from a PT at the client resource.
+5. Contains the token_id of the original object it represents, and a non-guessable stamp. Even though token_id can be used to uniquely identify an original object in a host resource, stamp must also match to ensure data integrity.
+6. A table is considered to be a PT if it has `"__gaijin_res"` as a key to a truthy value.
+7. PTs are also interned like AT, and there is a guarantee that there cannot be more than one PT for the same original object in the host resource.
 
-* Omitted
+* elem, element
 
-If I have omitted something from code samples, then it was noise that doesn't help in explaining the current subject, or pertains to a topic that will be explained later.
+primitive, AT or candidate
 
-* bakaGaijin_export, exported function, export  
+* gaijin
+
+>gai·jin
+>ɡīˈjin/
+>noun
+>(in Japan) a foreigner.
+
+ ##Some bakaGaijin concepts
+
+* bakaGaijin_export 
 
 bakaGaijin_export is a global constant of type function, which is exposed to other resources via MTA's export system. This function is the only way for bakaGaijin to gets information from another resource. It can perform various duties depending on the first argument it gets, and is essentially a multiplexer.
 
-bakaGaijin_export is called by OTHER RESOURCES, not the host resource that defined it.
+bakaGaijin_export is usually called by OTHER RESOURCES, not the host resource that defined it.
 
 	function bakaGaijin_export(typ, tokenid, stamp, ...)
 		local sourceResource = getResourceName( sourceResource )
@@ -191,12 +243,171 @@ bakaGaijin_export is called by OTHER RESOURCES, not the host resource that defin
 			return getProp(sourceResource, tokenid, ...)
 		elseif typ=="set" then
 			return setProp(sourceResource, tokenid, ...)
-		--Omitted: Long ifelse ladder.
+		--Omitted: Long if-else ladder.
 		else
 			error("bakaGaijin_export called incorrectly by "..sourceResource)
 		end
 	end
 
->UNDER CONSTRUCTION
+* Multimap
+
+I will not explain how it does it, but multimap.new(N) creates a table that maps N keys to a value.
+It mainly just provides syntactical sugar, and the same functionality can be accomplished using trees.
+
+The snippet is flawed and will cause memory leaks, so do not reuse it. However, the way bakaGaijin uses it ensures that no memory leaks occur.
+
+The main (and only) reason its used is because the resulting table is null safe and the syntax is convenient.
+
+Also, it stores the values in a weak table, so they fall off if not referenced elsewhere.
+
+	local mm = multimap.new(2)
+	mm[1][2] = "Value" --Does not complain about mm[1] being null
+	assert(mm["I don't exist"][1] == nil) --no error
+	assert(mm[1][2] == "Value") --no error
+
+* gaijinPool
+
+A table at the host resource that maps token_id to original object.
+
+* stampLookup
+
+A table at the host resource that maps token_id to a stamp value. This stamp value is set when a PT is constructed for the original object.
+
+Not necessarily a time stamp, but used to ensure that a newly exposed original object with the same token_id as an older expired one is not misinterpreted as the older one by a different resource. Also acts as a "password" as other resources can't fake the stamp unless they actually got the PT from somewhere. (token_id may be guessable, but stamp is not)
+
+* tokenLookup
+
+This table serves two purposes.
+  * At the client resource, maps an AT to the PT used to construct it.
+  * At the host resource, maps a candidate to the PT constructed for it (if any).
+
+ This is a key-weak table and values fall off if the AT/candidate is no longer referenced anywhere.
+
+* ATinterner
+
+This is a multimap used to ensure that ATs are interned.
+It maps (hostResourceName, token_id) to an AT
+
+The AT is stored weakly, and does not prevent it from being GCed.
+
+* ATmeta
+
+A metatable that lets ATs representing a table behave as if they *are* the table.
+Implementation is in the source code. Search for the string below to find its definition.
+
+	`--Generate metatable for an AToken being made form a PToken`
+
+* getPTokenFromElem
+
+A function that takes a value as argument, and returns something that is guaranteed to be transferable across resources without information loss. The returned value is also guaranteed to be able to uniquely identify the argument value.
+
+Acts as a filter for all values going from a host resource to a client resource.
+
+If argument is not a candidate, return it as it is.
+If it's an active token, then returns the passive token associated with it (from tokenLookup).
+If it is a candidate, then returns a PT representing it.
+  * If a PT for the candidate exists in tokenLookup, then returns that cached value
+  * If the PT doesn't exist, then constructs one, adds it to tokenLookup, and returns it.
+
+Look at appendix below for implementation details.
+
+* getElemFromPToken
+
+Acts as a filter for all values coming from a host resource to a client resource.
+
+Takes one argument.
+If it received a valid passive token:
+  * fetches and returns associated object (if this resource is the host for the PT)
+  * or reuses an AT if it exists in ATinterner (if this resource is a client for the PT)
+  * or constructs an AT (and updates ATinterner and <em>ATcache</em>) (if this resource is a client for the PT)
+
+Active tokens and non-candidates are returned without any changes.
+
+Look at appendix below for implementation details.
+
+* getProp(client, token_id, key)
+* setProp(client, tokenid, key, value)
+* callFun(client, tokenid, ...)
+
+Functions that are called on the host when a client attempts to get/set a value on an AT (or call an AT) that represents an original object in the host resource.
+
+These are actually called by bakaGaijin_export, which multiplexes these (and other functions) using opcodes.
+
+* pairs, ipairs
+
+ipairs and pairs are iterators used in Lua to enumerate the keys and values of a table.
+
+In Lua 5.2, the __pairs and __ipairs metamethods were added, allowing us to define how pairs and ipairs should behave over a table.
+
+We are working in Lua 5.1 and do not have this luxury.
+
+`ipairs` and `pairs` do not work properly over an AT.
+To make ATs behave more like tables, `ipairs` and `pairs` as global functions have been overridden (decorated) with versions that can deal with ATs.
+
+Specifically, when the new ipairs or pairs encounters an AT, instead of iterating over it, it calls bakaGaijin_export on the host resource with the opcode `pairs` or `ipairs`. The host resource then constructs a table of PTs and returns that, which is what pairs/ipairs iterates over.
+
+The original versions of pairs and ipairs are still available as raw_pairs and raw_ipairs.
+
+This can be observed in the source code if you search for the string  
+
+	----OVERRIDES-----
+
+The functions called by bakaGaijin_export when it receives `pairs` or `ipairs` as an opcode are `local function pairsByID(tokenid)` and `local function ipairsByID(tokenid)`, which can be searched for in the source.
+
+* Exposed variables
+
+bakaGaijin uses metatables to provide its syntax of `bakaGaijin.label` and `bakaGaijin("resource").label`
+
+`bakaGaijin` itself has its metatable set to bakaGijin_meta
+
+	local bakaGaijin_meta = {
+		__call = function(t, rec)
+			local proxy = {res_name = rec}
+			setmetatable(proxy, recmeta)
+			return proxy
+		end
+	}
+
+So, `val = bakaGaijin.label` and `bakaGaijin.label = val` actually do use bakaGaijin as a raw table. `label` must not be a candidate value, care must be taken regarding this by the user. I recommend using only string or number keys, and future versions may only allow string/number keys.
+
+In the source code you will find a table named `nameCache`. This is actually `bakaGaijin`.  
+
+Later in the code:
+	`bakaGaijin = nameCache`
+
+Calling bakaGaijin as a function with argument `rec` returns an object with its key `res_name` set to `rec` and its metatable set to `recmeta`
+
+	local recmeta = {
+		__index = function(t, index)
+			return getElemFromPToken(exports[t.res_name]:bakaGaijin_export("s2t", index))
+		end,
+		__newindex = function()
+			error("You cannot set data for another resource.", 2)
+		end
+	}
+
+Thus, if this object returned by bakaGaijin("someResource") is indexed, then it actually calls bakaGaijin_export on the host resource with the opcode `s2t` and the label key as an argument. The value returned by bakaGaijin_export is filtered using getElemFromPToken and returned to the user.
+
+Snippet from bakaGaijin_export:
+
+	function bakaGaijin_export(typ, tokenid, stamp, ...)
+		--IN THIS CASE, TOKENID IS NOT ACTUALLY TOKENID, IT IS THE KEY THAT WAS REQUESTED
+		local sourceResource = getResourceName( sourceResource )
+		if typ=="s2t" then
+			return getPTokenFromElem(nameCache[tokenid])
+		--omitted: elseif ladder
+		end
+	--omitted: rest of the function
+	end
+
+`s2t` stands for "String to token", which resolves a string to a passive token.
+
+* Subscriptions
+
+I have already highlighted before, the need for a "meta garbage collector" in bakaGaijin.
+
+Since references are still alive and may be accessible when they are no longer exposed, we need to have a mechanism to delete them when no resource at all has access to them, and keep them alive otherwise.
+
+>UNDER CONSTRUCTION, MORE TO COME SOON!
 
 ]==]))
