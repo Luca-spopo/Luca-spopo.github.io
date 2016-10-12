@@ -93,9 +93,9 @@ So bakaGaijin has been a leaning experience in the topics of API design, metapro
 If the data exchanged in these operations is immutable and serializable, then they are sent as they are without any subsequent performance loss.
 However, if they are tables, closures, or such mutable types then they are automatically "prepared" so that they can be sent accross safely. This preparation is done by:  
 
-  *  Storing them in an internal table on the host resource (The one that sent them)
-  *  Sending a handle of this object to the client resource (The one that requested it)
-  *  Generating a pseudo-object client side that behaves just like the actual object that was sent. This object would communicate with the host resource whenever a get/set/call is performed on it.
+  * Storing them in an internal table on the host resource (The one that sent them)
+  * Sending a handle of this object to the client resource (The one that requested it)
+  * Generating a pseudo-object client side that behaves just like the actual object that was sent. This object would communicate with the host resource whenever a get/set/call is performed on it.
   
 Exported functions are the most performant way of introducing the concept of callback functions (but this requires preparation). The event system is a little slower, but does not require any preparation before runtime. bakaGaijin uses an exported function to communicate with other resources, but most of the code is agnostic of this and it can be easily changed to use the event system instead.
 
@@ -104,6 +104,98 @@ bakaGaijin also has it's own "meta garbage collector" (I don't know what else to
 If you just want to use bakaGaijin for your own project, then check out "Test1" and "Test2" (to be run in parallel) on [GitHub](https://github.com/Luca-spopo/bakaGaijin). The source code is heavily commented and reading it cursively should be enough to understand how to use it.
 
 The rest of this page explains how it works.
+
+ #How it works
+
+ ##Some Vocabulary
+
+* bakaGaijin
+
+Either the script itself, or an instance of the script running on a particular VM. An instance of bakaGaijin.lua (or its minified version) must be running on every VM that is using bakaGaijin to communicate.
+
+* original object
+
+If a resource exposes a value (string, function, table, number etc) using bakaGaijin, that value is the original object. In `bakaGaijin.label = x`, `x` is the original object. Only really makes sense when x is a <em>candidate for tokenization</em>.
+
+*  candidate, candidate for tokenization
+
+A value that has a type that cannot be transferred accross resources without information loss.
+A value is NOT a canditate for tokenization if it is immutable and serializable.
+
+A candidate is of type `table` or `function`. Threads are also candidates, but not supported by bakaGaijin at the time of writing.
+All values of type `function` or `table` are candidates UNLESS they are an <em>AT</em>
+
+>My apologies, but "token" or "tokenization" in bakaGaijin has nothing to do with tokenization in compilers.
+>"Serialization" would be a better term, but "tokenization" stuck somehow
+
+* host, host resource
+
+Resource that contains the original object.
+
+* client, client resource
+
+Resouce that wishes to use an original object that it does not contain.
+
+* primative
+
+Any value of type `boolean`, `number`, `string`, `nil` or `userdata`
+
+* AT, Active Token
+
+A value present on the client resource. Client resource uses an AT as a handler/controller to interact with original object on the host resource. An AT is always <em>interned</em>
+
+* Interned, Interning
+
+A term borrowed from Lua's [string interner](https://en.wikipedia.org/wiki/String_interning). May be a misnomer.
+
+It basically means that active tokens are cached and reused, and there is a gaurentee that one original object will only correspong to one or zero AT in a given resource.
+
+Active tokens are interned, which means that if a a resource receives the same <em>passive token</em> again, it reuses 
+
+* PT
+
+Can be transferred accross resources without information loss. Is technically also a candidate.
+--Used to pass a candidate to another resource. AT is constructed from a PT at the client resource.
+--candidate = table or function, but not AT
+--elem = primative, AT or candidate
+
+* Omitted
+
+If I have omitted something from code samples, then it was noise that doesn't help in explaining the current subject, or pertains to a topic that will be explained later.
+
+* bakaGaijin_export, exported function, export  
+
+bakaGaijin_export is a global constant of type function, which is exposed to other resources via MTA's export system. This function is the only way for bakaGaijin to gets information from another resource. It can perform various duties depending on the first argument it gets, and is essentially a multiplexer.
+
+bakaGaijin_export is called by OTHER RESOURCES, not the host resource that defined it.
+
+	function bakaGaijin_export(typ, tokenid, stamp, ...)
+		local sourceResource = getResourceName( sourceResource )
+		--sourceResource is the remote resource that called bakaGaijin_export
+		
+		--Performs various operations depending on the first parameter,
+		--which is an opcode of sorts.
+		if typ=="s2t" then
+			return getPTokenFromElem(--[[Omitted]])
+		elseif typ=="free" then
+			return bakaGC()
+		end
+
+		--Asserts some checks to ensure integrity
+		if not gaijinPool[tokenid] or stamp ~= stampLookup[tokenid] then
+			return nil
+		end
+
+		--Operations for opcodes that required the checks above
+		if typ=="get" then
+			return getProp(sourceResource, tokenid, ...)
+		elseif typ=="set" then
+			return setProp(sourceResource, tokenid, ...)
+		--Omitted: Long ifelse ladder.
+		else
+			error("bakaGaijin_export called incorrectly by "..sourceResource)
+		end
+	end
 
 >UNDER CONSTRUCTION
 
