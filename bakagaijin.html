@@ -135,7 +135,7 @@ The rest of this page explains how it works.
 
 Let's see how bakaGaijin does its magic.
 
- ###Some Vocabulary
+ #Some Vocabulary
 
 * bakaGaijin
 
@@ -240,7 +240,7 @@ primitive, AT or candidate
 
 ![assets/gaijin.jpg](assets/gaijin.jpg)
 
- ###Some bakaGaijin concepts
+ #Some bakaGaijin concepts
 
 * bakaGaijin_export 
 
@@ -291,6 +291,10 @@ Also, it stores the values in a weak table, so they fall off if not referenced e
 	mm[1][2] = "Value" --Does not complain about mm[1] being null
 	assert(mm["I don't exist"][1] == nil) --no error
 	assert(mm[1][2] == "Value") --no error
+
+If you want to know how it works, it uses recursion and metatables. Just search for the this definition in the source code:
+
+	local multimap = {}
 
 * gaijinPool
 
@@ -432,13 +436,154 @@ Snippet from bakaGaijin_export:
 
 `s2t` stands for "String to token", which resolves a string to a passive token.
 
+
+ #Finally an explanation
+
+Ok, don't worry if you didn't understand all those terms, just keep visiting the definitions as you hear them in places.
+
+I expect you to know how [MTA exported functions](https://wiki.multitheftauto.com/wiki/Call) are called, how garbage collection works, and basic Lua. Knowing metatables in Lua also helps.
+
+Know that bakaGaijin("remoteResourceName") returns a "special" table (a table with something called a metatable) that, when indexed calls `exports["remoteResourceName"]:bakaGaijin_export("get")` and returns the value it gets after running <em>getElemFromPT</em> on it.
+
+>getElemFromPT?
+
+getElemFromPT is a function that acts as a "filter" of sorts. Everything that is coming to this resource from another resource goes through this filter first. Most items go through unaffected, but PTs are converted into ATs or their respective original objects.
+
+>PT? AT? original objects?
+
+Original object is what the other resource "tried" to send to you, but could not possibly have (functions, for example)
+
+So we convert it into a PT instead, and the PT gets sent without any problems.
+
+Once we get the PT, we convert it into an AT, which is another "special table" (or sometimes a function) that updates the values of the original object whenever its own values are changed, or asks the other resource to call its own function when the AT is called.
+
+We also have a getPTfromElem function that filters everything that goes out, converting it into a PT if needed.
+
+Here is a poorly drawn image (made on MS Paint of all things) that explains PTs and ATs
+
+![PT and AT](assets/PTandAT.jpg)
+
+`<function> f` is the original object.
+
+The green star is the process of converting an original object to a PT.
+The blue start is the process of converting a PT to an AT.
+
+PT(f) is implemented as this:
+
+	{
+		__gaijin_id = XYZ, --//Some number to uniquely identify function f
+		__gaijin_res = Host_Resource_Name,
+		--// (__gaijin_res, _gaijin_id) can together be used to uniquely identify an original object.
+		__gaijin_stamp = PQR, --//Some number to ensure integrity
+		__gaijin_fun = true --//Tells the client resource that the original object is a function
+	}
+
+AT(f) is implemented as this:
+
+	function(...)
+		exports[PT.__gaijin_res]:bakaGaijin_export("call", PT.__gaijin_id, PT.__gaijin_stamp, ...)
+	end
+
+An AT for a table is a bit more complicated as it uses metatables to fire callbacks for get and set operations.
+
+bakaGaijin_export is the only exported function and can do a lot of tasks for us depending on the first argument it gets. For example, in this case, `"call"` told it to call a function and return the value. Needless to say, the function parameters and return values also pass through getElemFromPT and getPTfromElem
+
+Also note that resources can send ATs to each other. The AT would get converted to the original PT it was calculated from, and then sent to other resources. The other resources will convert it into ATs again in their own VMs. Unless the original object belonged to one of the resources... in that case the resource would realize that the PT represents an object in its own machine and `getElemFromPT(PT(f))` would be the original object itself.
+
+ #Meta Garbage Collection, Virtual Virtual Machine Networks and Hacks
+
 * Subscriptions
 
 I have already highlighted before, the need for a "meta garbage collector" in bakaGaijin.
 
 Since references are still alive and may be accessible when they are no longer exposed, we need to have a mechanism to delete them when no resource at all has access to them, and keep them alive otherwise.
 
->UNDER CONSTRUCTION, MORE TO COME SOON!
+...ok, I can't type anymore. This is very tiring.
+
+Less reference manual, more short story now.
+
+Short story:
+
+bakaGaijin has a "sub" opcode that a remote resource calls when it has subscribed to a particular original object.  
+This subscription is stored in an internal table called `ownLookup`  
+`ownLookup` is a multitable that maps (remoteResourceName, tokenID) to TRUE or NIL.
+TRUE meaning that remoteResource has access to original object represented by tokenID, and NIL meaning otherwise.  
+The subscription call is fired by the remote resource whenever getElemFromPT gets a valid PT it didn't already have an AT for.
+Similarly, there is an "unsub" opcode that unsubsribes a resource to an original object. This is called whenever the remote resource cannot access an AT anymore.
+
+Whenever the host resource gets an unsub for an original object, it checks if there are still any subscribers left.
+
+If there are no more subscribers after an unsub call (no more resources that can access the original object), then the original object is removed from gaijinPool, tokenLookup, stampLookup and ownLookup. The PT is no more, and the original object will get GCed unless the host resource itself is using it.
+
+Lua 5.2 has "__on_garbage_collect" metamethod that works as a destructor, and would have been used to fire unsub calls when an AT is GCed.
+
+However, we are on Lua 5.1, and do not have such a luxury. There is a lot more to explain.
+
+>How do you fire unsub calls?
+
+This is hacky, do not try this at home.
+
+You already know ATinterner, it maps a token_id to an AT weakly. If the AT is GCed, then this table will not contain it anymore.
+
+We also have a table called ATcache (I neglected to mention it before) that maps token_id to a TRUTHY value or NIL. This table is not weak.
+
+ATcache is a "shadow" of ATinterner. For every AT that is put in ATinterner, a truthy value is also put in ATcache.
+
+We also have a timer that calls a function `updateATC` every `ATC_WAIT` milliseconds (Every minute by default).
+
+This function... wait for it....  
+<em>CHECKS FOR KEYS THAT ARE TRUTHY ON `ATcache` AND FALSY ON `ATinterner`.</em>
+
+Now before you throw tomatoes at me, let me tell you that this was the only way to do it. Lua 5.1 does not have any callbacks that we can fire on garbage collection (implemented in pure Lua).
+It is not very inefficient, don't worry.
+
+Anyway, if ATcache has a value that's truthy, and ATinterner has it as nil, then ATinterner dropped the value, which means it was garbage collected. This results in an unsub call.
+
+Now, here emerges a new problem:
+
+The Lua garbage collector only kicks in if the Virtual Machine is actually low on memory.  
+Now that we have created this... large "<em>Virtual</em> Virtual Machine" Network where references are shared among virtual machines... the garbage collector should not be selfish and only kick in when its own Virtual Machine is starving.
+
+If the client resource is under no stress, it will not fire unsub signals regardless of whether or not the host resource is under stress.
+
+bakaGaijin has two strategies to handle this.
+
+One is the most obvious: For every `COLLECTOR_WAITS` calls to updateATC, collect_garbage is called once forcing the client resource to clean up its mess. (Every 10 minutes by default)
+
+	local LOAD_GAIN_TOLERANCE = 1.4
+	--If a resource keeps locking lots of objects and actually uses them, it's allowance is increased.
+	--LOAD_GAIN_TOLERANCE tells bakaGaijin how much to increase the allowance each time it's exceeded.
+	--A value of 1.4 means allowance will increase by 40%. This makes the GC elastic and dynamic.
+	local LOAD_MIN = 100 --The minimum number of items a resource is allowed to lock before it's asked to check it's actual usage and send unsub messages
+	local COLLECTOR_WAITS = 10 --Number of bakaGaijin's GC's sweeps before the Lua GC is invoked
+	local ATC_TIME = 60000 --Miliseconds between each "sweep" of bakaGaijin's GC
+
+The second solution is much more elegant, and makes the first one unneeded (but we keep it anyway).
+
+There is also a table called `loads` which maps a client resource to the number of original objects (belonging to the host resource) it is subscribed to.  
+There is another table called `loadsShadow` which maps a client resource to the "last known number of objects actually used" by the client resource.
+
+There is a LOAD_MIN threshold the host has. Clients are not bothered until they cross this threshold.
+
+Once they cross this threshold, bakaGaijin_export is called on the client with the opcode `free`.
+This forces the client to call its garbage collector, and then call updateATC.
+updateATC then fires unsub messages.
+
+These unsub messages reach the host, which gladly accepts them.
+It then REEVALUATES the client resource's usage (Any objects not being used have been unsubbed at this point, so all subbed objects are being used).
+Since at this point all the objects are actually being used, loadsShadow's value is set to load's value
+`loadsShadow[res] = loads[res]`
+If there are lots of subbed objects, then the host realizes the client's need for more memory and a new threshold is set.
+New threshold is set as loadsShadow[res] * LOAD_GAIN_TOLERANCE(1.4 by default)
+
+If there are too few subs, and the allowance the client previously had is not justified anymore, then the tolerance is set to a lower level.
+Again, using the same formula loadsShadow[res] * LOAD_GAIN_TOLERANCE
+
+The threshold can never be lower than LOAD_MIN (100 by default), which means a client will never be bothered if it keeps less than 100 subscriptions.
+
+That's all folks... I don't know if you understood any of this stuff but I had a duty to document this project.
+
+If you still insist on understanding its workings and this page didn't answer all your questions, then shoot me a mail. :-]
 
 </textarea>
 `<item><font style="font-size: 10; font-family : Verdana; float : right; margin-right : 10px">Made by Anirudh Katoch, all rights reserved<br/>(Powered by <a href="http://strapdownjs.com/">StrapDown.js</a> + <a href="https://github.com/joedf/strapdown-topbar">topbar</a>)</font></item>`
