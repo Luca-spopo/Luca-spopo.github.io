@@ -486,7 +486,7 @@ This subscription is stored in an internal table called `ownLookup`
 `ownLookup` is a multitable that maps (remoteResourceName, tokenID) to TRUE or NIL.
 TRUE meaning that remoteResource has access to original object represented by tokenID, and NIL meaning otherwise.  
 The subscription call is fired by the remote resource whenever getElemFromPT gets a valid PT it didn't already have an AT for.
-Similarly, there is an "unsub" opcode that unsubsribes a resource to an original object. This is called whenever the remote resource cannot access an AT anymore.
+Similarly, there is an "unsub" opcode that unsubscribes a resource to an original object. This is called whenever the remote resource cannot access an AT anymore.
 
 Whenever the host resource gets an unsub for an original object, it checks if there are still any subscribers left.
 
@@ -533,7 +533,7 @@ One is the most obvious: For every `COLLECTOR_WAITS` calls to updateATC, collect
 	--A value of 1.4 means allowance will increase by 40%. This makes the GC elastic and dynamic.
 	local LOAD_MIN = 100 --The minimum number of items a resource is allowed to lock before it's asked to check it's actual usage and send unsub messages
 	local COLLECTOR_WAITS = 10 --Number of bakaGaijin's GC's sweeps before the Lua GC is invoked
-	local ATC_TIME = 60000 --Miliseconds between each "sweep" of bakaGaijin's GC
+	local ATC_TIME = 60000 --Milliseconds between each "sweep" of bakaGaijin's GC
 
 The second solution is much more elegant, and makes the first one unneeded (but we keep it anyway).
 

@@ -24,7 +24,7 @@ Coffee addict
 
 >Favorite book?
 
-I haven't read a lot of books, but Hitchhiker's Guide To The Galaxy was great.
+I haven't read a lot of books, but Hitchhikers' Guide To The Galaxy was great.
 
 >Introvert or Extrovert?
 
@@ -58,14 +58,14 @@ Invest and grow. Life is like farmville.
 (TL;DR)<sup>-1<sup>
 -----------
 My early childhood revolved around extreme boredom, video games and the internet. Imagine a summer vacation, now
-imagine feeling that way for a few years. This extreme boredom played out in my favour as I developed a habit of
+imagine feeling that way for a few years. This extreme boredom played out in my favor as I developed a habit of
 thinking. My thoughts would wander to all sorts of subjects as my tiny brain tried to figure out how telephones are
 possible at all, why the sky isn't falling, and all the other questions you would have the first time you encounter
 ~~PHP~~ life. I did not get the answers to my questions until much later in life, but I believe the process of asking
 the questions was much more impactful on my development than getting the answers.
 
 Just as reading a good book fills some people with the desire to write, playing certain wonderful video games filled
-me with a desire to make them. I would fill notebooks with content about my favourite games, and ideas on how to
+me with a desire to make them. I would fill notebooks with content about my favorite games, and ideas on how to
 expand on them. Perhaps I had a slight compulsion for documenting things in general, or maybe I was just bored. 
 (Speaking of which, I also religiously recorded all the Pokemon songs on a tape recorder, I probably did have a thing
 for documenting.)
