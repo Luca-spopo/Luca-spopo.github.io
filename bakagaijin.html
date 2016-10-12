@@ -481,7 +481,10 @@ PT(f) is implemented as this:
 AT(f) is implemented as this:
 
 	function(...)
-		exports[PT.__gaijin_res]:bakaGaijin_export("call", PT.__gaijin_id, PT.__gaijin_stamp, ...)
+		return getElemFromPT(
+			exports[PT.__gaijin_res]:bakaGaijin_export(
+				"call", PT.__gaijin_id, PT.__gaijin_stamp, ...)
+			);
 	end
 
 An AT for a table is a bit more complicated as it uses metatables to fire callbacks for get and set operations.
