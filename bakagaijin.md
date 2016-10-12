@@ -107,7 +107,9 @@ The rest of this page explains how it works.
 
  #How it works
 
- ##Some Vocabulary
+Let's see how bakaGaijin does its magic.
+
+ ###Some Vocabulary
 
 * bakaGaijin
 
@@ -120,39 +122,40 @@ I will make a distinction between the term "exposed" and "accessible".
 
 Consider this:
 
-	--resource1
+	--//resource1
 	local x = {y=true}
 	bakaGaijin.x = x
 
-	--then at resource2
+	--//then at resource2
 	local x = bakaGaijin("resource1").x
 
-	--then at resource1
+	--//then at resource1
 	bakaGaijin.x = nil
-	--x is not longer EXPOSED (A resource can't use bakaGaijin("resource1").x to access x)
+	--//x is not longer EXPOSED (A resource cannot use bakaGaijin("resource1").x to access x)
 
-	--then at resource2
-	--x from resource1 is still ACCESSIBLE to resource2, as it already got a reference earlier.
-	print x.y --true
+	--//then at resource2
+	--//x from resource1 is still ACCESSIBLE to resource2, as it already got a reference earlier.
+	print x.y --//true
 	x.y = false
 
-	--but it is not EXPOSED
-	print bakaGaijin("resource1").x --nil
+	--//but it is not EXPOSED
+	print bakaGaijin("resource1").x --//nil
 
-Accessible is when a resource *can* read/write an original object exposed earlier.
+Accessible is when a resource *can* read/write an original object exposed earlier.  
 Exposed is when a resource can get the reference to the original object from the host resource using bakaGaijin.
 
 * original object
 
-If a resource exposes a value (string, function, table, number etc) using bakaGaijin, that value is the original object. In `bakaGaijin.label = x`, `x` is the original object. Only really makes sense when x is a <em>candidate for tokenization</em>.
+If a resource exposes a value (string, function, table, number etc) using bakaGaijin, that value is the original object.  
+In `bakaGaijin.label = x`, `x` is the original object. Only really makes sense when x is a <em>candidate for tokenization</em>.
 
 * token_id
 
-Each original object is allotted a token_id when a PT is constructed for it for the first time. There is a guarantee that no two original objects will have the same token_id at the same time. The token_id of an original object does not change as long as bakaGaijin is exposing it.
+Each original object is allotted a token_id when a <em>PT</em> is constructed for it for the first time. There is a guarantee that no two original objects will have the same token_id at the same time. The token_id of an original object does not change as long as bakaGaijin is keeping it accessible.
 
-*  candidate, candidate for tokenization
+* candidate, candidate for tokenization
 
-A value that has a type that cannot be transferred across resources without information loss.
+A value that has a type that cannot be transferred across resources without information loss.  
 A value is NOT a candidate for tokenization if it is immutable and serializable.
 
 A candidate is of type `table` or `function`. Threads are also candidates, but not supported by bakaGaijin at the time of writing.
@@ -194,13 +197,14 @@ Active tokens are interned, which means that if a a resource receives the same <
 
 * PT, passive token
 
-1. Can be transferred across resources without information loss.
-2. Used to represent an original object
-3. Used as an intermediate representation of an original object when two resources are communicating via bakaGaijin.
-4. AT is constructed from a PT at the client resource.
-5. Contains the token_id of the original object it represents, and a non-guessable stamp. Even though token_id can be used to uniquely identify an original object in a host resource, stamp must also match to ensure data integrity.
-6. A table is considered to be a PT if it has `"__gaijin_res"` as a key to a truthy value.
-7. PTs are also interned like AT, and there is a guarantee that there cannot be more than one PT for the same original object in the host resource.
+ * Can be transferred across resources without information loss.
+ * Used to represent an original object
+ * Used as an intermediate representation of an original object when two resources are communicating via bakaGaijin.
+ * AT is constructed from a PT at the client resource.
+ * Contains the token_id of the original object it represents, and a non-guessable stamp. Even though token_id can be used to uniquely identify an original object in a host resource, stamp must also match to ensure data integrity.
+ * A table is considered to be a PT if it has `"__gaijin_res"` as a key to a truthy value.
+ * PTs are also interned like AT, and there is a guarantee that there cannot be more than one PT for the same original object in the host resource.  
+
 
 * elem, element
 
@@ -208,12 +212,9 @@ primitive, AT or candidate
 
 * gaijin
 
->gai·jin
->ɡīˈjin/
->noun
->(in Japan) a foreigner.
+![assets/gaijin.jpg](assets/gaijin.jpg)
 
- ##Some bakaGaijin concepts
+ ###Some bakaGaijin concepts
 
 * bakaGaijin_export 
 
@@ -254,9 +255,9 @@ bakaGaijin_export is usually called by OTHER RESOURCES, not the host resource th
 I will not explain how it does it, but multimap.new(N) creates a table that maps N keys to a value.
 It mainly just provides syntactical sugar, and the same functionality can be accomplished using trees.
 
-The snippet is flawed and will cause memory leaks, so do not reuse it. However, the way bakaGaijin uses it ensures that no memory leaks occur.
+The implementation is flawed and will cause memory leaks, so do not reuse it. However, the way bakaGaijin uses it ensures that no memory leaks occur.
 
-The main (and only) reason its used is because the resulting table is null safe and the syntax is convenient.
+The main (and only) reason its used is because the resulting table is null safe and the syntax is convenient. (So we can pretend that Lua has `?.` operator like Groovy)
 
 Also, it stores the values in a weak table, so they fall off if not referenced elsewhere.
 
@@ -271,13 +272,13 @@ A table at the host resource that maps token_id to original object.
 
 * stampLookup
 
-A table at the host resource that maps token_id to a stamp value. This stamp value is set when a PT is constructed for the original object.
+A table at the host resource that maps token_id to a stamp value. This stamp value is set when a PT is constructed for the original object.  
 
-Not necessarily a time stamp, but used to ensure that a newly exposed original object with the same token_id as an older expired one is not misinterpreted as the older one by a different resource. Also acts as a "password" as other resources can't fake the stamp unless they actually got the PT from somewhere. (token_id may be guessable, but stamp is not)
+Not necessarily a time stamp, but used to ensure that a newly exposed original object with the same token_id as an older expired one is not misinterpreted as the older one by a different resource.  
+Also acts as a "password" as other resources can't fake the stamp unless they actually got the PT from somewhere. (token_id may be guessable, but stamp is not)
 
-* tokenLookup
-
-This table serves two purposes.
+* tokenLookup  
+  This table serves two purposes.  
   * At the client resource, maps an AT to the PT used to construct it.
   * At the host resource, maps a candidate to the PT constructed for it (if any).
 
@@ -299,13 +300,15 @@ Implementation is in the source code. Search for the string below to find its de
 
 * getPTokenFromElem
 
-A function that takes a value as argument, and returns something that is guaranteed to be transferable across resources without information loss. The returned value is also guaranteed to be able to uniquely identify the argument value.
+  A function that takes a value as argument, and returns something that is guaranteed to be transferable across resources without information loss.  
+  The returned value is also guaranteed to be able to uniquely identify the argument value.
 
-Acts as a filter for all values going from a host resource to a client resource.
+  Acts as a filter for all values going from a host resource to a client resource.
 
-If argument is not a candidate, return it as it is.
-If it's an active token, then returns the passive token associated with it (from tokenLookup).
-If it is a candidate, then returns a PT representing it.
+  If argument is not a candidate, returns it as it is.  
+  If it's an active token, then returns the passive token associated with it (from tokenLookup).  
+  If it is a candidate, then returns a PT representing it.
+
   * If a PT for the candidate exists in tokenLookup, then returns that cached value
   * If the PT doesn't exist, then constructs one, adds it to tokenLookup, and returns it.
 
@@ -313,10 +316,11 @@ Look at appendix below for implementation details.
 
 * getElemFromPToken
 
-Acts as a filter for all values coming from a host resource to a client resource.
+  Acts as a filter for all values coming from a host resource to a client resource.
 
-Takes one argument.
-If it received a valid passive token:
+  Takes one argument.  
+  If it received a valid passive token:  
+
   * fetches and returns associated object (if this resource is the host for the PT)
   * or reuses an AT if it exists in ATinterner (if this resource is a client for the PT)
   * or constructs an AT (and updates ATinterner and <em>ATcache</em>) (if this resource is a client for the PT)
@@ -337,7 +341,7 @@ These are actually called by bakaGaijin_export, which multiplexes these (and oth
 
 ipairs and pairs are iterators used in Lua to enumerate the keys and values of a table.
 
-In Lua 5.2, the __pairs and __ipairs metamethods were added, allowing us to define how pairs and ipairs should behave over a table.
+In Lua 5.2, the `__pairs` and `__ipairs` metamethods were added, allowing us to define how pairs and ipairs should behave over a table.
 
 We are working in Lua 5.1 and do not have this luxury.
 
