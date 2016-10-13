@@ -63,6 +63,8 @@ fromMD = function(text)
 <topbar>
     <item><a href="index.html">About me</a></item>
     <item><a href="portfolio.html">Portfolio</a></item>
+    <item><a href="projects.html">Projects</a></item>
+    <!-- Hack: Menu not proper on mobile
     <menu name="Projects">
         <item><a href="ash.html">Ash</a></item>
         <item><a href="bakagaijin.html">BakaGaijin</a></item>
@@ -70,6 +72,7 @@ fromMD = function(text)
         <item></item>
         <item><a href="projects.html">Show all</a></item>
     </menu>
+    -->
 <!--     <item><a href="rants.html">Banter</a></item> -->
     <item><a href="contact.html">Contact</a></item>
     ]==]
