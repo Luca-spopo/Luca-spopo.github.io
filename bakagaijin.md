@@ -433,14 +433,16 @@ Once we get the PT, we convert it into an AT, which is another "special table" (
 
 We also have a getPTfromElem function that filters everything that goes out, converting it into a PT if needed.
 
+EDIT: <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)">Here</a> is a wikipedia article discussing the topic (Vocabulary is different from mine)
+
 Here is a poorly drawn image (made on MS Paint of all things) that explains PTs and ATs
 
-![PT and AT](assets/PTandAT.jpg)
+![PT and AT](assets/PTandAT.jpg)  
 
 `<function> f` is the original object.
 
 The green star is the process of converting an original object to a PT.
-The blue start is the process of converting a PT to an AT.
+The blue star is the process of converting a PT to an AT.
 
 PT(f) is implemented as this:
 

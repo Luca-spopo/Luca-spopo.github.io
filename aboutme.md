@@ -43,7 +43,7 @@ This may sound funny but I think I'm good at thinking.
 Most of my personal projects have had no time bound, so I have used them as learning opportunities, instead of
 aiming to complete them.
 
-i.e. _overengineering_
+As a result, I am bad at predicting how long a job would take.
 
 >Work hard or work smart?
 
@@ -51,7 +51,8 @@ No reason not to do both.
 
 >What if you won the lottery?
 
-Invest and grow. Life is like farmville.
+~~Life is like farmville~~  
+Hire a financial advisor.
 
 >Tell me everything
 

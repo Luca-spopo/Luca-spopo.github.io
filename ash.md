@@ -3,6 +3,8 @@ $(fromMD([==[
 Ash
 ===
 
+![ash.jpg](assets/ash.jpg)
+
 Ash is a framework/library for MTA that gives you the most flexible and most beautiful UI.
 Ash does not only provide a beautiful GUI, it also aims to wrap over all other UI. For now that includes GUI, keyboard input and mouse input.
 

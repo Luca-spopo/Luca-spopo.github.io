@@ -1,5 +1,5 @@
 $(fromMD([==[
- ###_I think I have decent specs_
+ ###_specs_
 
 Name                          | Anirudh Katoch
 ------------:                 |:-------------
@@ -15,7 +15,7 @@ Technical Activities          | **Procedural level and art generation** _(JavaSc
                               | **Graphics Designer, Tech Tatva, Manipal** _(Gimp)_<br /> <small>Fall 2015</small> <br /> Designed event poster to be displayed in colleges across India.
                               | **Management Committee, IECSE** <br /> <small>2015-2016</small>
                               | **Working Committee, IECSE** <br /> <small>2014-2015</small>
-                              | **PoDa** _(gamedev, Haxe, Java, Flash, JS)_ <br /> <small>2012-Forever</small> </br>My perpetual and pet project for practicing my implementation skills.
+                              | **PoDa** _(gamedev, Haxe, Java, Flash, JS)_ <br /> <small>2012-Forever</small> </br>My perpetual pet project for practicing my implementation skills.
 Academic Achievements         | **PSA Test, Conducted by CBSE, India** <br/>Quantitative Reasoning: 99.94 Percentile <br/> Qualitative Reasoning: 98.27 Percentile
                               | **ASSET, India** <br/>  99.2 and 98.8 Percentiles (Science and Math respectively)
                               | **National Science Olympiad by Eduheal (India)** <br />State rank: 1 <br />National rank: 12

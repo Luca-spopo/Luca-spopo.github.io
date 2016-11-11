@@ -83,7 +83,7 @@ fromMD = function(text)
 	..text
 	..[==[
 </textarea>
-`<item><font style="font-size: 10; font-family : Verdana; float : right; margin-right : 10px">Made by Anirudh Katoch, all rights reserved<br/>(Powered by <a href="http://strapdownjs.com/">StrapDown.js</a> + <a href="https://github.com/joedf/strapdown-topbar">topbar</a>)</font></item>`
+`<item><font style="font-size: 10; font-family : Verdana; float : right; margin-right : 10px">Made by Anirudh Katoch, all rights reserved<br/>(Powered by <a href="http://strapdownjs.com/">StrapDown.js</a> + <a href="https://github.com/joedf/strapdown-topbar">topbar</a> + <a href="http://lua-users.org/wiki/SlightlyLessSimpleLuaPreprocessor">Lua</a>)</font></item>`
 </body>
 <script src="strapdown-gh-pages/v/0.2/strapdown.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/strapdown-topbar/1.6.4/strapdown-topbar.min.js"></script>
