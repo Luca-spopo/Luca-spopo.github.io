@@ -61,8 +61,7 @@ Hire a financial advisor.
 My early childhood revolved around extreme boredom, video games and the internet. Imagine a summer vacation, now
 imagine feeling that way for a few years. This extreme boredom played out in my favor as I developed a habit of
 thinking. My thoughts would wander to all sorts of subjects as my tiny brain tried to figure out how telephones are
-possible at all, why the sky isn't falling, and all the other questions you would have the first time you encounter
-~~PHP~~ life. I did not get the answers to my questions until much later in life, but I believe the process of asking
+possible at all, why the sky isn't falling, and all the other questions you would have the first time you encounter life. I did not get the answers to my questions until much later in life, but I believe the process of asking
 the questions was much more impactful on my development than getting the answers.
 
 Just as reading a good book fills some people with the desire to write, playing certain wonderful video games filled
