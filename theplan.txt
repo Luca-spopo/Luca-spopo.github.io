@@ -1,0 +1,9 @@
+
+Note: URL must contain only URL fragments to land into a particular context. The entire site must be one page for speed.
+
+Landing page must contain:
+-Confimation that person is on the site/page they intended to land on
+-Impression
+-Aesthetics
+-Very little to read
+-
