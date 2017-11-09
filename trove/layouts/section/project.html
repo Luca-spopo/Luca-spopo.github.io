@@ -3,9 +3,6 @@
      <!--  {{ .Render "summary" }}
       HELLO THIS IS ONE PROJECT <hr /> -->
       {{ range .Data.Pages }}
-        <li>
-            <a href="{{.Permalink}}">{{.Date.Format "2006-01-02"}} | {{.Title}}</a>
-        </li>
         {{ .Render "summary" }}
     {{ end }}
   </section>

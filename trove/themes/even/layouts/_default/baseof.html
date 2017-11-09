@@ -12,11 +12,10 @@
 </head>
 <body>
   {{ partial "slideout.html" . }}
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
+  <header id="header" class="header" style="padding: 0; float: none;">
         {{ partial "header.html" . }}
-    </header>
-
+  </header>
+  <div class="container" id="mobile-panel">
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
