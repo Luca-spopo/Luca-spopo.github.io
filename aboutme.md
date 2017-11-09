@@ -2,6 +2,7 @@ $(fromMD([==[
 
 ```
 $luca@BOB> whoami
+luca
 ```
 
 About me

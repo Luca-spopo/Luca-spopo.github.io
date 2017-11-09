@@ -32,7 +32,7 @@ __index = function(t, k)
 end
 })
 
-TOCtext = ""
+TOCtext = "Kek la kek"
 THEME = "simplex"
 
 function TOC(param)
@@ -61,7 +61,7 @@ fromMD = function(text)
 </head>
 <body>
 <topbar>
-    <item><a href="index.html">About me</a></item>
+    <item><a href="index.html">About asdf me</a></item>
     <item><a href="portfolio.html">Portfolio</a></item>
     <item><a href="projects.html">Projects</a></item>
     <!-- Hack: Menu not proper on mobile

@@ -1,0 +1,22 @@
+
+<nav class="site-navbar" style="background-color: white; position: fixed; top:0;left: 0;right: 0;height: 40px;box-shadow: 0px 1px 2px #c05b4d; z-index: 100">
+  <div class="logo-wrapper-" style="white-space: nowrap;margin-left: 10%;">
+    <b style="font-size:20px;font-family: 'Josefin Sans','Helvetica Neue',Helvetica,Arial;">
+    <a href="{{ "/" | relURL }}" class="logo-" style="display: inline-block;white-space: normal;width:300px;">
+      <img class="logoImage" style="height:25px; margin-right: 15px; margin-bottom: 5px;"></img>
+      {{- if .Site.Params.logoTitle -}}
+        {{ .Site.Params.logoTitle }}
+      {{- else -}}
+        {{ .Site.Title }}
+      {{- end -}}
+    </a>
+  <ul id="menu" class="menu" style="white-space: normal;display: inline-block;margin-top: 3px;">
+    {{ range .Site.Menus.main -}}
+      <li class="menu-item" style="list-syle-type: none">
+        <a style="margin-left: 10px; margin-right : 10px;font-size:15px" class="menu-item-link" href="{{ .URL | safeURL }}">{{ .Name }}</a>
+      </li>
+    {{- end }}
+  </ul>
+  </b>
+  </div>
+</nav>
