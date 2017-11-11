@@ -1,7 +1,8 @@
 ---
 title : "Ash"
 summary : "Ash is a closed source UI library for MTA implemented in pure Lua. It provides its own window management system, own event system, own input system and own tweening system. It has a foreign interface so cool that it was forked as its own open source project called bakaGaijin."
-tags: ["Lua", "MTA"]
+tags: ["Lua", "MTA", "UI"]
+comment: true
 categories: ["Software Development"]
 date: 2016-10-10
 mathjax : true

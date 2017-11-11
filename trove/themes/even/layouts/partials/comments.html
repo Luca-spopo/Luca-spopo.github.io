@@ -3,6 +3,11 @@
   {{- if .Site.DisqusShortname -}}
     <div id="disqus_thread"></div>
     <script type="text/javascript">
+    {{ if hasPrefix .Params.comment "_" }}
+    var disqus_config = function () {
+      this.page.identifier = "{{ substr .Params.comment 1 | safeHTML }}";
+    };
+    {{ end }}
     (function() {
         // Don't ever inject Disqus on localhost--it creates unwanted
         // discussions from 'localhost:1313' on your Disqus account...

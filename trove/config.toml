@@ -22,31 +22,33 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   priority = 0.5
   filename = "sitemap.xml"
 
-[[menu.main]]             # config your menu              # 配置目录
-  name = "About Me"
+#Configure your menu
+
+[[menu.main]]
+  name = "About me"
   weight = 10
   identifier = "aboutme"
-  url = "/"
+  url = "/about/"
 [[menu.main]]
   name = "Portfolio"
   weight = 20
   identifier = "portfolio"
-  url = "/portfolio.html"
+  url = "/portfolio/"
 [[menu.main]]
   name = "Projects"
   weight = 30
   identifier = "projects"
   url = "/project/"
 [[menu.main]]
-  name = "Archive"
+  name = "Blogs"
   weight = 40
-  identifier = "archive"
+  identifier = "blog"
   url = "/blog/"
 [[menu.main]]
-  name = "Contact me"
+  name = "Tutorials"
   weight = 50
-  identifier = "contact"
-  url = "/contact.html"
+  identifier = "tutorial"
+  url = "/tutorial/"
 
 [params]
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
@@ -77,7 +79,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   mathjax = true            # see https://www.mathjax.org/                              # 是否使用mathjax（数学公式）
   linkToMarkDown = false    # if you config contentCopyright and hugo output .md files. # 是否在链接到markdown原始文件（如果你配置了下面的许可协议并允许hugo生成markdown文件）
 
-  contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
+  contentCopyright = ''
 
   changyanAppid = ""        # Changyan app id             # 畅言
   changyanAppkey = ""       # Changyan app key

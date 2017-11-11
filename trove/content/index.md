@@ -10,7 +10,7 @@ categories: []
 author: ""
 
 # you can close something for this content if you open it in config.toml.
-comment: true
+comment: _root
 toc: false
 # you can define another contentCopyright. e.g. contentCopyright: "This is an another copyright."
 contentCopyright: false
@@ -39,5 +39,6 @@ This site is under construction...
 
 - [X] Migrate the projects
 - [X] Get summaries and project list to work
-- [ ] Integrate Disqus
+- [X] Integrate Disqus
 - [X] Add search box
+- [ ] Take care of sitemap.xml
