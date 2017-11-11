@@ -2,7 +2,7 @@
 title : "Ash"
 summary : "Ash is a closed source UI library for MTA implemented in pure Lua. It provides its own window management system, own event system, own input system and own tweening system. It has a foreign interface so cool that it was forked as its own open source project called bakaGaijin."
 tags: ["Lua", "MTA"]
-categories: ["Software Dev."]
+categories: ["Software Development"]
 date: 2016-10-10
 mathjax : true
 ---
@@ -305,15 +305,21 @@ The rendering function of a component also gets INHERITED CONTEXT as a parameter
 Inherited context means that the rendering of the children depends on the parents. Alphas are multiplied by parent alphas (as you would expect), X and Y coordinates are added up (So all coordinates are relative).
 Why stop at alpha? It also inherits all other color transformations. You can tint elements, and all their children would get tinted. Color transformations are accomplished by keeping 9x9 matrices, and multiplying them to perform affine transformations.
 
-[ rrf, grf, brf,   0, 0, 0, 0, 0, 0]
-[ rgf, ggf, bgf,   0, 0, 0, 0, 0, 0]
-[ rbf, gbf, bbf,   0, 0, 0, 0, 0, 0]
-[   0,   0,   0, aaf, 0, 0, 0, 0, 0]
-[ rcf,   0,   0,   0, 1, 0, 0, 0, 0]
-[   0, gcf,   0,   0, 0, 1, 0, 0, 0]
-[   0,   0, bcf,   0, 0, 0, 1, 0, 0]
-[   0,   0,   0, acf, 0, 0, 0, 1, 0]
-[ rtf, gtf, btf, atf, 0, 0, 0, 0, 1]
+<div>
+\begin{bmatrix}
+ rrf & grf & brf &   0 & 0 & 0 & 0 & 0 & 0 \\
+ rgf & ggf & bgf &   0 & 0 & 0 & 0 & 0 & 0 \\
+ rbf & gbf & bbf &   0 & 0 & 0 & 0 & 0 & 0 \\
+   0 &   0 &   0 & aaf & 0 & 0 & 0 & 0 & 0 \\
+ rcf &   0 &   0 &   0 & 1 & 0 & 0 & 0 & 0 \\
+   0 & gcf &   0 &   0 & 0 & 1 & 0 & 0 & 0 \\
+   0 &   0 & bcf &   0 & 0 & 0 & 1 & 0 & 0 \\
+   0 &   0 &   0 & acf & 0 & 0 & 0 & 1 & 0 \\
+ rtf & gtf & btf & atf & 0 & 0 & 0 & 0 & 1 
+ \end{bmatrix}
+</div>
+
+where $r' = red\times{}rrf + green\times{}rgf + blue\times{}rbf + blend\times{}rcf + rtf$
 
 Of course, the actual matrices are sparse so we store 18 values per component, not 81.
 

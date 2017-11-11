@@ -10,7 +10,7 @@ categories: []
 author: ""
 
 # you can close something for this content if you open it in config.toml.
-comment: false
+comment: true
 toc: false
 # you can define another contentCopyright. e.g. contentCopyright: "This is an another copyright."
 contentCopyright: false
@@ -35,4 +35,9 @@ If you're here for something else, click one of the menu items on top (The top l
 
 If you're here for something that's not here, then contact me!
 
-Credits for the logos go to [Gabe from Dribble](https://dribbble.com/shots/2055585-Chiyo-Dad-Emojis).
+This site is under construction...
+
+- [X] Migrate the projects
+- [X] Get summaries and project list to work
+- [ ] Integrate Disqus
+- [X] Add search box

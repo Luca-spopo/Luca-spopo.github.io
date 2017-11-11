@@ -1,3 +1,5 @@
+---
+title : Procedural Generation
 summary : bakaGaijin is an open source (MIT License) library that allows seamless cross resource communication across Lua virtual machines in MTA. It allows you to pass functions, tables (by reference), and such complex types that the C interface is not actually capable of sending. It is implemented in pure Lua.
 
 ---

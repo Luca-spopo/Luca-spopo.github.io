@@ -20,16 +20,6 @@
 {{- end }}
 <script type="text/javascript" src="{{ "dist/even.min.js?v=2.6.5" | relURL }}"></script>
 
-{{- if and (and .Site.Params.mathjax (ne .Params.mathjax false)) (or .IsPage .IsHome) }}
-  <script type="text/javascript">
-    window.MathJax = {
-      showProcessingMessages: false,
-      messageStyle: 'none'
-    };
-  </script>
-  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-{{- end }}
-
 <!-- Analytics -->
 {{- if .Site.GoogleAnalytics -}}
   {{ template "_internal/google_analytics_async.html" . }}
@@ -65,4 +55,35 @@
     s.parentNode.insertBefore(bp, s);
   })();
 </script>
+{{- end }}
+
+{{- if and (and .Site.Params.mathjax (ne .Params.mathjax false)) (or .IsPage .IsHome) }}
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      //delayStartupUntil: "onload",
+      messageStyle: 'none',
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": { availableFonts: ["TeX"] }
+    };
+//    setTimeout(function(){ MathJax.Hub.setRenderer("HTML-CSS"); MathJax.Hub.Rerender(MathJax.Hub.getAllJax("")); console.log("refreshing attempt")}, 10000)
+  </script>
+<!--   <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX","output/SVG"],
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": { availableFonts: ["TeX"] } 
+    });
+    MathJax.Hub.Queue(
+      ["setRenderer",MathJax.Hub,"HTML-CSS"],
+    );
+
+  </script> -->
+  <script id="mathjax-script" async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 {{- end }}
