@@ -5,6 +5,7 @@ title = "Luca's Trove"
 enableRobotsTXT = true
 enableEmoji = true
 theme = "even"
+publishDir = "docs"
 
 logo-font-size = 3
 
