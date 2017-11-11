@@ -3,8 +3,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://luca-spopo.github.io/tutorial/</loc>
+    <lastmod>2017-11-11T06:38:01+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://luca-spopo.github.io/blog/</loc>
+    <lastmod>2017-11-11T06:37:24+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://luca-spopo.github.io/portfolio/</loc>
+    <lastmod>2017-11-11T06:17:42+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://luca-spopo.github.io/pay/</loc>
     <lastmod>2017-11-11T06:06:51+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://luca-spopo.github.io/</loc>
+    <lastmod>2017-11-08T22:24:33+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -101,7 +129,7 @@
   
   <url>
     <loc>http://luca-spopo.github.io/</loc>
-    <lastmod>2017-11-11T06:06:51+05:30</lastmod>
+    <lastmod>2017-11-11T06:38:01+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

@@ -6,10 +6,43 @@
     <description>Recent content on Luca&#39;s Trove</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 11 Nov 2017 06:06:51 +0530</lastBuildDate>
+    <lastBuildDate>Sat, 11 Nov 2017 06:38:01 +0530</lastBuildDate>
     
 	<atom:link href="http://luca-spopo.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Tutorial</title>
+      <link>http://luca-spopo.github.io/tutorial/</link>
+      <pubDate>Sat, 11 Nov 2017 06:38:01 +0530</pubDate>
+      
+      <guid>http://luca-spopo.github.io/tutorial/</guid>
+      <description>&lt;p&gt;This section is under construction.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Blog</title>
+      <link>http://luca-spopo.github.io/blog/</link>
+      <pubDate>Sat, 11 Nov 2017 06:37:24 +0530</pubDate>
+      
+      <guid>http://luca-spopo.github.io/blog/</guid>
+      <description>&lt;p&gt;This section is under construction&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Portfolio</title>
+      <link>http://luca-spopo.github.io/portfolio/</link>
+      <pubDate>Sat, 11 Nov 2017 06:17:42 +0530</pubDate>
+      
+      <guid>http://luca-spopo.github.io/portfolio/</guid>
+      <description>specs
+   Name Anirudh Katoch     Mugshot Bonus trivia: I wear glasses.   Education Schooling at The Heritage School, New Delhi Currently attending college at Manipal Institute of Technology.  Currently in the 5th semester, perusing a major in Information Technology   Areas of Interest Game development, Research, Anything Interesting&amp;trade;.   Technical Activities Procedural level and art generation (JavaScript, WebGL)
+Summer 2016 Developed non-deterministic Cellular Automata, L-systems and Perlin Noise for level generation in video games.</description>
+    </item>
     
     <item>
       <title>Pay</title>
@@ -23,6 +56,19 @@ BTC: 1EgmjpJUxuYfZjRkVfXxsC82apibe4zJHW
 Ether: 0xcf7bb415f304cc8a72fe44526a03d7a109cec8ab
 LiteCoin: LYuj12cK3ZnipY7ufoXG9DBno35skmytcs
 Monero: 43XEgHK95EeAeWScgMnELAEEzyt9eyezfd3UD5TDMfabafxyzqpWSRFGmmL1mZnVGeD1tkWhYxPwc6mvq3QSKjXPHLdacAr</description>
+    </item>
+    
+    <item>
+      <title>Welcome</title>
+      <link>http://luca-spopo.github.io/</link>
+      <pubDate>Wed, 08 Nov 2017 22:24:33 +0530</pubDate>
+      
+      <guid>http://luca-spopo.github.io/</guid>
+      <description>$luca@BOB&amp;gt; pwd 
+You have reached the website of Anirudh Katoch. What are you looking for?
+If you&amp;rsquo;re a potential employer, then you&amp;rsquo;re probably looking for my portfolio or projects. Please also check out the &amp;ldquo;About me&amp;rdquo; section.
+If you&amp;rsquo;re just here to read cool stuff, then check out my projects and my blogs.
+If you&amp;rsquo;re here for something else, click one of the menu items on top (The top left button if you&amp;rsquo;re on mobile).</description>
     </item>
     
     <item>
