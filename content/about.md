@@ -1,0 +1,111 @@
+---
+title: "About Me"
+date: 2017-08-20T21:38:52+08:00
+lastmod: 2017-08-28T21:41:52+08:00
+
+# you can close something for this content if you open it in config.toml.
+comment: _root
+mathjax: false
+---
+
+`
+$luca@BOB> whoami
+luca
+`
+
+About me
+========
+I'm Anirudh Katoch, an undergraduate student at Manipal Institute of Technology, Manipal. Currently pursuing a B.Tech in Information Technology. I have a passion for creating things and solving problems (in equal parts). I have found that I am best suited for creating through technology. This is my personal website. Some people prefer to call me Luca, which is my online handle.
+
+>Hobbies?
+
+Singing, swimming, gaming, football, coding, thinking, sleeping, anime, manga
+
+I am also interested in math, physics, reading and writing.  But I've not invested enough time in them to be able to call them hobbies.  _I'll find the time eventually._
+
+>Vices?
+
+Coffee addict
+
+>Favorite book?
+
+I haven't read a lot of books, but Hitchhikers' Guide To The Galaxy was great.
+
+>Introvert or Extrovert?
+
+Highly adaptable.
+
+>Dream job?
+
+One that lets me be creative and helps me grow.
+
+>Strengths?
+
+Problem solving skills, high moral/ethical integrity, amicable personality.
+
+>Weakness?
+
+Most of my projects have had no deadlines, so I have used them as learning opportunities, instead of
+aiming to complete them.
+As a result, I am bad at predicting how long a job would take.
+
+I am also really bad at spelling :S
+
+>Work hard or work smart?
+
+No reason not to do both.
+
+>What if you won the lottery?
+
+~~Life is like farmville~~  
+Hire a financial advisor.
+
+>Tell me everything
+
+(TL;DR)<sup>-1<sup>
+-----------
+My early childhood revolved around extreme boredom, video games and the internet. Imagine a summer vacation, now
+imagine feeling that way for a few years. This extreme boredom played out in my favor as I developed a habit of
+thinking. My thoughts would wander to all sorts of subjects as my tiny brain tried to figure out how telephones are
+possible at all, why the sky isn't falling, and all the other questions you would have the first time you encounter life. I did not get the answers to my questions until much later in life, but I believe the process of asking
+the questions was much more impactful on my development than getting the answers.
+
+Just as reading a good book fills some people with the desire to write, playing certain wonderful video games filled
+me with a desire to make them. I would fill notebooks with content about my favorite games, and ideas on how to
+expand on them. Perhaps I had a slight compulsion for documenting things in general, or maybe I was just bored. 
+(Speaking of which, I also religiously recorded all the Pokemon songs on a tape recorder, I probably did have a thing
+for documenting.)
+
+At the onset of teenage I shifted to New Delhi. My social circle got a lot larger there. As I grew older and figured
+out how the internet works, I was introduced to Macromedia FlashMX by chance. ActionScript 2 was my third language
+after Hindi and English. An embarrassing number of years were then spent teaching myself how to code trivial things.
+I also picked up ActionScript 3 later on. I was also introduced to various forums, and this was my gateway to
+internet culture.
+
+Eventually I stumbled upon [MTA](https://github.com/multitheftauto), a fan made, open source multiplayer mod for GTA
+San Andreas that provides hooks to alter every aspect of gameplay. I joined one of the roleplay servers and then
+there is a long, tangential story of how I ended up leading an online clan (Which is somehow still alive), and then
+become a moderator, and a Lua programmer. As a staff member on an online persistent world multiplayer server with
+lots of rivals, I learned a lot about administration, networking, databases, software architecture, project
+management, bug tracking, hacking, crisis management and damage control. I also fell in love with Lua, which is still
+my language of choice.
+
+Fast forward a few years and the 11th grade school curriculum introduced me to (a very old standard of) C++. Working
+on a lower level of abstraction really cleared my concepts about computers. It made me appreciate and fully
+understand higher level features such as closures, type systems, runtime checking, complex types being abstracted as
+objects, garbage collection, and all those things under the hood.
+
+Around the same time, I first started using Linux. I learned basic bash scripting and set up tiny (but useful) scripts
+that used cron to send my Minecraft server's IP to a list of friends (Before I knew how easy setting up a DDNS was),
+or remotely used the webcam to make sure things are still OK in the house while we were on vacation. The scripts were
+barely a few dozen lines long, thanks to the plethora of wonderful tools and abstractions available, but the
+experience of gluing them together and applying them to real world problems was very educational. Eventually I would
+start browsing the [Arch wiki](https://wiki.archlinux.org/) and pick up all sorts of Linux trivia.
+
+After that I entered college, and that is where this story `yield`s. I have met some amazing people here. My
+roommates are a math/physics buff + mad guitarist Arjit Seth, and writing prodigy + very sane guitarist Rahul Basu. I
+also networked and worked with some amazing people at [IECSE](https://www.iecsemanipal.com/). I spent some very
+memorable weeks interning with some insanely talented people at IIT Bombay under [FOSSEE](http://fossee.in/). I spent many sleepless
+nights writing code for [bakaGaijin](/project/bakagaijin/) and [Ash](/project/ash/). I learned how to perfectly and crisply iron a shirt (among more technical things) during my [HP](/project/hpe/) internship. I have also collected a lot of [anime](/anime.log) at this point.
+
+If you actually read all of that then I applaud your patience.  Maybe you want to read about my [creations](/project/)? Or have a look at a more formal and descriptive [portfolio](/portfolio/)?

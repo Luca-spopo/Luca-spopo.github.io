@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>bakaGaijin - Luca&#39;s Trove</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Anirudh Katoch" />
+  <meta name="description" content="bakaGaijin is an open source (MIT License) project that emerged from the (larger and closed source) Ash project.
+It aims to provide seamless cross resource communication across Lua virtual machines in MTA.
+
+" />
+
+  <meta name="keywords" content="Katoch, Anirudh, Job, Software, Engineer" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="http://luca-spopo.github.io/project/bakagaijin/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<link id="favicon_link" rel="icon" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+ 
+<script type="text/javascript">
+  var logosource = '/img/logos/logo'+Math.floor(1 +  7 *Math.random())+'.png'
+  document.getElementById("favicon_link").href = logosource
+</script>
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.5" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="bakaGaijin" />
+<meta property="og:description" content="bakaGaijin is an open source (MIT License) project that emerged from the (larger and closed source) Ash project.
+
+It aims to provide seamless cross resource communication across Lua virtual machines in MTA.
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://luca-spopo.github.io/project/bakagaijin/" />
+
+
+
+<meta property="article:published_time" content="2016-05-01T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-05-01T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="bakaGaijin">
+<meta itemprop="description" content="bakaGaijin is an open source (MIT License) project that emerged from the (larger and closed source) Ash project.
+
+It aims to provide seamless cross resource communication across Lua virtual machines in MTA.
+
+">
+
+
+<meta itemprop="datePublished" content="2016-05-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-05-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4637">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="bakaGaijin"/>
+<meta name="twitter:description" content="bakaGaijin is an open source (MIT License) project that emerged from the (larger and closed source) Ash project.
+
+It aims to provide seamless cross resource communication across Lua virtual machines in MTA.
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+<style type="text/css">
+  .post-tag a {
+    border: 1px solid #cb5b4d;
+    border-radius: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: #cb5b4d;
+    margin: 2px;
+  }
+  .post-tag {
+    display: inline;
+  }
+</style>
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar" style="position: static">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">
+              <img class="logoImage" style="height:20px; margin-right: 5px;"></img>Luca&#39;s Trove</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu" style="background: none">
+  <ul class="mobile-menu-list">
+    <a href="/about/">
+        <li class="mobile-menu-item">About me</li>
+      </a><a href="/portfolio/">
+        <li class="mobile-menu-item">Portfolio</li>
+      </a><a href="/project/">
+        <li class="mobile-menu-item">Projects</li>
+      </a><a href="/blog/">
+        <li class="mobile-menu-item">Blogs</li>
+      </a><a href="/tutorial/">
+        <li class="mobile-menu-item">Tutorials</li>
+      </a>
+    <img src="/img/chiyo-chichi.png" id="slideout-chiyochichi"> 
+    <script>
+      {
+      var chiyo_chichi_float = document.getElementById("slideout-chiyochichi")
+      var callback;
+      callback = function() { chiyo_chichi_float.style.paddingTop = (10+Math.floor(10*Math.sin(Date.now()/1000)))+"px" ; requestAnimationFrame(callback) }
+      requestAnimationFrame(callback)
+      }
+    </script>
+  </ul>
+</nav>
+  <header id="header" class="header" style="padding: 0; float: none;">
+        <nav class="site-navbar" style="background-color: white; height: 40px;box-shadow: 0px 1px 2px #c05b4d; z-index: 100; float: none; margin-bottom: 3px">
+  <div class="logo-wrapper-" style="white-space: nowrap;margin-left: 10%;">
+    <b style="font-size:20px;font-family: 'Josefin Sans','Helvetica Neue',Helvetica,Arial;">
+    <a href="/" class="logo-" style="display: inline-block;white-space: normal;width:300px;">
+      <img class="logoImage" style="height:25px; margin-right: 15px; margin-bottom: 5px;"></img>Luca&#39;s Trove</a>
+  <ul id="menu" class="menu" style="white-space: normal;display: inline-block;margin-top: 3px;">
+    <li class="menu-item" style="list-syle-type: none">
+        <a style="margin-left: 10px; margin-right : 10px;font-size:15px" class="menu-item-link" href="/about/">About me</a>
+      </li><li class="menu-item" style="list-syle-type: none">
+        <a style="margin-left: 10px; margin-right : 10px;font-size:15px" class="menu-item-link" href="/portfolio/">Portfolio</a>
+      </li><li class="menu-item" style="list-syle-type: none">
+        <a style="margin-left: 10px; margin-right : 10px;font-size:15px" class="menu-item-link" href="/project/">Projects</a>
+      </li><li class="menu-item" style="list-syle-type: none">
+        <a style="margin-left: 10px; margin-right : 10px;font-size:15px" class="menu-item-link" href="/blog/">Blogs</a>
+      </li><li class="menu-item" style="list-syle-type: none">
+        <a style="margin-left: 10px; margin-right : 10px;font-size:15px" class="menu-item-link" href="/tutorial/">Tutorials</a>
+      </li>
+  </ul>
+  </b>
+  </div>
+</nav>
+  </header>
+  <div class="container" id="mobile-panel">
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">bakaGaijin</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> May 1, 2016 </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#some-background">Some Background</a></li>
+<li><a href="#before-bakagaijin">Before bakaGaijin</a></li>
+<li><a href="#the-problem">The Problem</a></li>
+<li><a href="#the-solution">The Solution</a></li>
+<li><a href="#how-it-works">How it works</a></li>
+<li><a href="#some-vocabulary">Some Vocabulary</a></li>
+<li><a href="#some-bakagaijin-concepts">Some bakaGaijin concepts</a></li>
+<li><a href="#finally-an-explanation">Finally an explanation</a></li>
+<li><a href="#meta-garbage-collection-virtual-virtual-machine-networks-and-hacks">Meta Garbage Collection, Virtual Virtual Machine Networks and Hacks</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>bakaGaijin is an <a href="https://github.com/Luca-spopo/bakaGaijin/tree/master/bakaGaijin">open source</a> (MIT License) project that emerged from the (larger and closed source) <a href="/project/ash">Ash</a> project.</p>
+
+<p>It aims to provide seamless cross resource communication across Lua virtual machines in MTA.</p>
+
+<p></p>
+
+<h1 id="some-background">Some Background</h1>
+
+<blockquote>
+<p><a href="https://github.com/multitheftauto">Multitheft Auto</a> is an open source modification of Rockstar&rsquo;s very successful (and old) game Grand Theft Auto: San Andreas. It adds support for multiplayer (GTA:SA is originally single player only), and lets the server hosting the game change every aspect of the game at run time through Lua scripts that interact with hooks provided by the engine.</p>
+</blockquote>
+
+<p>For modularity, it encourages developers to split and decouple their scripts as &ldquo;resources&rdquo;. A resource has one or more script files that run in sequence on one Lua Virtual Machine. There is exactly one VM per resource, and as such resource A does not suffer from memory leaks or crashes occurring in a resource B.</p>
+
+<p>As two different resources sit on different VMs, the only way for them to communicate is through MTA (i.e. the C interface exposed by MTA). MTA provides few approaches for any resources to communicate with each other.</p>
+
+<h1 id="before-bakagaijin">Before bakaGaijin</h1>
+
+<ol>
+<li><p>MTA has an element tree that is synched for every VM. Any event that is triggered on an element in one VM is also triggered in all other VMs. Elements are objects that are implemented by the C code, and can thus be transferred across VMs as <a href="https://en.wikipedia.org/wiki/Opaque_data_type">opaque objects</a>.</p>
+
+<ul>
+<li>Elements can also contain properties (called &ldquo;element data&rdquo;). These are string keys mapped to tables or primitive data types. Tables stored in this way are stripped of any non-storable keys/values.</li>
+<li>Functions/Threads cannot be stored as element data, and the keys cannot be anything other than strings.</li>
+<li>There have also been some bugs in the past where element data was not behaving properly.</li>
+<li>As such, elements and their behavior are coded in C and do not benefit from Lua&rsquo;s principles or from Lua&rsquo;s well known reliability.</li>
+<li>Tables &ldquo;fetched&rdquo; from element data are copied by value when sent to the VM, and thus any changes made to them do not reflect on the element data until they are manually copied back. This leads to thread safety issues that need to be stepped around.</li>
+<li>MTA has an event system for these elements, and these elements form a tree that the event is propagated through.<br /></li>
+</ul></li>
+</ol>
+
+<p>Thus, element data and event handlers on elements are one way of communicating with other resources.</p>
+
+<ol>
+<li><p>MTA offers the concept of &ldquo;exported&rdquo; functions. A resource may declare (in its configuration files) that it is exporting certain global functions. Other resources are then allowed to call such exported functions through the syntax of <code>exports.remoteResourceName.functionName(exports.remoteResourceName, ...)</code>.</p>
+
+<ul>
+<li>This changes the signature of the originally exported function, as it has an additional self parameter now.</li>
+<li>The function must be declared as exported statically before the resource is loaded.</li>
+<li>The function must be global and named. Lambdas and local functions aren&rsquo;t allowed.</li>
+<li>The configuration is stored in an XML file. Nobody wants to touch the XML files.</li>
+<li>The parameters and return values are still stripped of any values the C interface cannot comprehend (functions, threads, tables values/keys that are functions/threads)</li>
+<li>Any tables that are returned or passed as parameters are still copied by value.</li>
+</ul></li>
+
+<li><p>The third option is file or database operations. Not a feasible solution.</p></li>
+</ol>
+
+<h1 id="the-problem">The Problem</h1>
+
+<p>While <em>usually</em> this decoupling of resources is not a problem as resources rarely talk to each other, but there are many valid use cases where two resources need to be coupled more tightly (e.g. <a href="https://wiki.multitheftauto.com/wiki/Resource:DxGUI">dxGUI</a>, <a href="/project/ash/">Ash</a>, <a href="https://community.multitheftauto.com/index.php?p=resources&amp;s=details&amp;id=546">DataBase management</a>, <a href="https://forum.mtasa.com/topic/84461-closed-beta-debug-console-join-now/">Debugging systems</a>).</p>
+
+<p>MTA&rsquo;s inability to pass abstract/contextual datatypes means that the developers of such resources need to sidestep these problems, usually through opaque handles and a bunch of functions to change their state.</p>
+
+<h1 id="the-solution">The Solution</h1>
+
+<p>bakaGaijin is a framework where your resource can expose any value it wants during runtime. These
+values do not have to be global, or even currently referenced. This can be done in one simple line of code
+as <code>bakaGaijin.SomeLabel = value</code></p>
+
+<p>bakaGaijin also provides a way to get such exposed values from other resources. This is also done
+easily as <code>foreignValue = bakaGaijin(&quot;RemoteResourceName&quot;).SomeLabel</code></p>
+
+<p>This may not seem complicated, but consider a case like this:</p>
+
+<pre><code class="language-lua">    --At resource1
+    bakaGaijin.ABC = {x=0}
+
+    --Then, at resource2
+    local ABC = bakaGaijin(&quot;resource1&quot;).ABC
+    
+    --Then, at resource3
+    local ABC = bakaGaijin(&quot;resource1&quot;).ABC
+    
+    --Then at resource1
+    bakaGaijin.ABC = nil
+    --The table is now not referenced anywhere in resource1, but it is still alive and will not be deleted.
+
+    --Then, at resource2
+    ABC.x = ABC.x+1;
+
+    --Then, at resource3
+    print(&quot;ABC.x is &quot;..ABC.x) --ABC.x is 1
+    ABC = nil
+    --Only resource2 has a reference to ABC at this point
+
+    --Then, at resource2
+    ABC = nil
+    --ABC is now a candidate for deletion, and resource1 will delete it eventually.
+</code></pre>
+
+<p>Also, let me tell you how easy it is to set up bakaGaijin. It only uses one exported function, and this function is a multiplexer for all communications. All you need to declare is one statically exported function called <code>bakaGaijin_export</code></p>
+
+<p>ABC in resource3 and resource2 is also obviously not actual references to the table in resource1 (The C interface is incapable of that). The behavior of the handler is emulated using clever metaprogramming. Lua uses metatables for this, which is similar to &ldquo;object prototypes&rdquo; in other languages.</p>
+
+<p>So bakaGaijin has been a leaning experience in the topics of API design, metaprogramming, memory management, multi-threading, and design in general.</p>
+
+<p>If the data exchanged in these operations is immutable and serializable, then they are sent as they are without any subsequent performance loss.
+However, if they are tables, closures, or such mutable types then they are automatically &ldquo;prepared&rdquo; so that they can be sent across safely. This preparation is done by:</p>
+
+<ul>
+<li>Storing them in an internal table on the host resource (The one that sent them)</li>
+<li>Sending a handle of this object to the client resource (The one that requested it)</li>
+<li>Generating a pseudo-object client side that behaves just like the actual object that was sent. This object would communicate with the host resource whenever a get/set/call is performed on it.
+<br /></li>
+</ul>
+
+<p>Exported functions are the most performant way of introducing the concept of callback functions (but this requires preparation). The event system is a little slower, but does not require any preparation before runtime. bakaGaijin uses an exported function to communicate with other resources, but most of the code is agnostic of this and it can be easily changed to use the event system instead.</p>
+
+<p>bakaGaijin also has it&rsquo;s own &ldquo;meta garbage collector&rdquo; (I don&rsquo;t know what else to call it) that manages the deallocation of values no longer accessible to other resources via bakaGaijin. So you do not need to worry about any memory leaks.</p>
+
+<p>If you just want to use bakaGaijin for your own project, then check out &ldquo;Test1&rdquo; and &ldquo;Test2&rdquo; (to be run in parallel) on <a href="https://github.com/Luca-spopo/bakaGaijin">GitHub</a>. The source code is heavily commented and reading it cursively should be enough to understand how to use it.</p>
+
+<p>The rest of this page explains how it works.</p>
+
+<h1 id="how-it-works">How it works</h1>
+
+<p>Let&rsquo;s see how bakaGaijin does its magic.</p>
+
+<h1 id="some-vocabulary">Some Vocabulary</h1>
+
+<ul>
+<li>bakaGaijin</li>
+</ul>
+
+<p>Either the script itself, or an instance of the script running on a particular VM. An instance of bakaGaijin.lua (or its minified version) must be running on every VM that is using bakaGaijin to communicate.</p>
+
+<ul>
+<li>expose</li>
+<li>access</li>
+</ul>
+
+<p>I will make a distinction between the term &ldquo;exposed&rdquo; and &ldquo;accessible&rdquo;.</p>
+
+<p>Consider this:</p>
+
+<pre><code class="language-lua">    --//resource1
+    local x = {y=true}
+    bakaGaijin.x = x
+
+    --//then at resource2
+    local x = bakaGaijin(&quot;resource1&quot;).x
+
+    --//then at resource1
+    bakaGaijin.x = nil
+    --//x is not longer EXPOSED (A resource cannot use bakaGaijin(&quot;resource1&quot;).x to access x)
+
+    --//then at resource2
+    --//x from resource1 is still ACCESSIBLE to resource2, as it already got a reference earlier.
+    print x.y --//true
+    x.y = false
+
+    --//but it is not EXPOSED
+    print bakaGaijin(&quot;resource1&quot;).x --//nil
+</code></pre>
+
+<p>Accessible is when a resource <em>can</em> read/write an original object exposed earlier.<br />
+Exposed is when a resource can get the reference to the original object from the host resource using bakaGaijin.</p>
+
+<ul>
+<li>original object</li>
+</ul>
+
+<p>If a resource exposes a value (string, function, table, number etc) using bakaGaijin, that value is the original object.<br />
+In <code>bakaGaijin.label = x</code>, <code>x</code> is the original object. Only really makes sense when x is a <em>candidate for tokenization</em>.</p>
+
+<ul>
+<li>token_id</li>
+</ul>
+
+<p>Each original object is allotted a token_id when a <em>PT</em> is constructed for it for the first time. There is a guarantee that no two original objects will have the same token_id at the same time. The token_id of an original object does not change as long as bakaGaijin is keeping it accessible.</p>
+
+<ul>
+<li>candidate, candidate for tokenization</li>
+</ul>
+
+<p>A value that has a type that cannot be transferred across resources without information loss.<br />
+A value is NOT a candidate for tokenization if it is immutable and serializable.</p>
+
+<p>A candidate is of type <code>table</code> or <code>function</code>. Threads are also candidates, but not supported by bakaGaijin at the time of writing.
+All values of type <code>function</code> or <code>table</code> are candidates UNLESS they are an <em>AT</em></p>
+
+<blockquote>
+<p>My apologies, but &ldquo;token&rdquo; or &ldquo;tokenization&rdquo; in bakaGaijin has nothing to do with tokenization in compilers.
+&ldquo;Serialization&rdquo; would be a better term, but &ldquo;tokenization&rdquo; stuck somehow</p>
+</blockquote>
+
+<ul>
+<li>host, host resource</li>
+</ul>
+
+<p>Resource that contains the original object.</p>
+
+<ul>
+<li>client, client resource</li>
+</ul>
+
+<p>Resource that wishes to use an original object that it does not contain.</p>
+
+<ul>
+<li>primitive</li>
+</ul>
+
+<p>Any value of type <code>boolean</code>, <code>number</code>, <code>string</code>, <code>nil</code> or <code>userdata</code></p>
+
+<ul>
+<li>GC</li>
+</ul>
+
+<p>Garbage collector. &ldquo;GCed&rdquo; means garbage collected.</p>
+
+<p>Here is a joke:
+&gt;If Java had true garbage collection it would collect itself.</p>
+
+<ul>
+<li>AT, Active Token</li>
+</ul>
+
+<p>A value present on the client resource. Client resource uses an AT as a handler/controller to interact with original object on the host resource. An AT is always <em>interned</em></p>
+
+<ul>
+<li>interned, interning</li>
+</ul>
+
+<p>A term borrowed from Lua&rsquo;s <a href="https://en.wikipedia.org/wiki/String_interning">string interner</a>. May be a misnomer.</p>
+
+<p>It basically means that active tokens are cached and reused, and there is a guarantee that one original object will only corresponding to one or zero AT in a given resource.</p>
+
+<p>Active tokens are interned, which means that if a a resource receives the same <em>passive token</em> again, it reuses the active token already made for it.</p>
+
+<ul>
+<li><p>PT, passive token</p>
+
+<ul>
+<li>Can be transferred across resources without information loss.</li>
+<li>Used to represent an original object</li>
+<li>Used as an intermediate representation of an original object when two resources are communicating via bakaGaijin.</li>
+<li>AT is constructed from a PT at the client resource.</li>
+<li>Contains the token_id of the original object it represents, and a non-guessable stamp. Even though token_id can be used to uniquely identify an original object in a host resource, stamp must also match to ensure data integrity.</li>
+<li>A table is considered to be a PT if it has <code>&quot;__gaijin_res&quot;</code> as a key to a truthy value.</li>
+<li>PTs are also interned like AT, and there is a guarantee that there cannot be more than one PT for the same original object in the host resource.<br /></li>
+</ul></li>
+
+<li><p>elem, element</p></li>
+</ul>
+
+<p>primitive, AT or candidate</p>
+
+<ul>
+<li>gaijin</li>
+</ul>
+
+<p><img src="/img/gaijin.jpg" alt="assets/gaijin.jpg" /></p>
+
+<h1 id="some-bakagaijin-concepts">Some bakaGaijin concepts</h1>
+
+<ul>
+<li>bakaGaijin_export</li>
+</ul>
+
+<p>bakaGaijin_export is a global constant of type function, which is exposed to other resources via MTA&rsquo;s export system. This function is the only way for bakaGaijin to gets information from another resource. It can perform various duties depending on the first argument it gets, and is essentially a multiplexer.</p>
+
+<p>bakaGaijin_export is usually called by OTHER RESOURCES, not the host resource that defined it.</p>
+
+<pre><code class="language-lua">    function bakaGaijin_export(typ, tokenid, stamp, ...)
+        local sourceResource = getResourceName( sourceResource )
+        --sourceResource is the remote resource that called bakaGaijin_export
+        
+        --Performs various operations depending on the first parameter,
+        --which is an opcode of sorts.
+        if typ==&quot;s2t&quot; then
+            return getPTokenFromElem(--[[Omitted]])
+        elseif typ==&quot;free&quot; then
+            return bakaGC()
+        end
+
+        --Asserts some checks to ensure integrity
+        if not gaijinPool[tokenid] or stamp ~= stampLookup[tokenid] then
+            return nil
+        end
+
+        --Operations for opcodes that required the checks above
+        if typ==&quot;get&quot; then
+            return getProp(sourceResource, tokenid, ...)
+        elseif typ==&quot;set&quot; then
+            return setProp(sourceResource, tokenid, ...)
+        --Omitted: Long if-else ladder.
+        else
+            error(&quot;bakaGaijin_export called incorrectly by &quot;..sourceResource)
+        end
+    end
+</code></pre>
+
+<ul>
+<li>Multimap</li>
+</ul>
+
+<p>I will not explain how it does it, but multimap.new(N) creates a table that maps N keys to a value.
+It mainly just provides syntactical sugar, and the same functionality can be accomplished using trees.</p>
+
+<p>The implementation is flawed and will cause memory leaks, so do not reuse it. However, the way bakaGaijin uses it ensures that no memory leaks occur.</p>
+
+<p>The main (and only) reason its used is because the resulting table is null safe and the syntax is convenient. (So we can pretend that Lua has <code>?.</code> operator like Groovy)</p>
+
+<p>Also, it stores the values in a weak table, so they fall off if not referenced elsewhere.</p>
+
+<pre><code class="language-lua">    local mm = multimap.new(2)
+    mm[1][2] = &quot;Value&quot; --Does not complain about mm[1] being null
+    assert(mm[&quot;I don't exist&quot;][1] == nil) --no error
+    assert(mm[1][2] == &quot;Value&quot;) --no error
+</code></pre>
+
+<p>If you want to know how it works, it uses recursion and metatables. Just search for the this definition in the source code:</p>
+
+<pre><code class="language-lua">    local multimap = {}
+</code></pre>
+
+<ul>
+<li>gaijinPool</li>
+</ul>
+
+<p>A table at the host resource that maps token_id to original object.</p>
+
+<ul>
+<li>stampLookup</li>
+</ul>
+
+<p>A table at the host resource that maps token_id to a stamp value. This stamp value is set when a PT is constructed for the original object.</p>
+
+<p>Not necessarily a time stamp, but used to ensure that a newly exposed original object with the same token_id as an older expired one is not misinterpreted as the older one by a different resource.<br />
+Also acts as a &ldquo;password&rdquo; as other resources can&rsquo;t fake the stamp unless they actually got the PT from somewhere. (token_id may be guessable, but stamp is not)</p>
+
+<ul>
+<li>tokenLookup<br />
+This table serves two purposes.<br />
+
+<ul>
+<li>At the client resource, maps an AT to the PT used to construct it.</li>
+<li>At the host resource, maps a candidate to the PT constructed for it (if any).</li>
+</ul></li>
+</ul>
+
+<p>This is a key-weak table and values fall off if the AT/candidate is no longer referenced anywhere.</p>
+
+<ul>
+<li>ATinterner</li>
+</ul>
+
+<p>This is a multimap used to ensure that ATs are interned.
+It maps (hostResourceName, token_id) to an AT</p>
+
+<p>The AT is stored weakly, and does not prevent it from being GCed.</p>
+
+<ul>
+<li>ATmeta</li>
+</ul>
+
+<p>A metatable that lets ATs representing a table behave as if they <em>are</em> the table.
+Implementation is in the source code. Search for the string below to find its definition.</p>
+
+<pre><code class="language-lua">    `--Generate metatable for an AToken being made form a PToken`
+</code></pre>
+
+<ul>
+<li>getPTokenFromElem</li>
+</ul>
+
+<p>A function that takes a value as argument, and returns something that is guaranteed to be transferable across resources without information loss.<br />
+  The returned value is also guaranteed to be able to uniquely identify the argument value.</p>
+
+<p>Acts as a filter for all values going from a host resource to a client resource.</p>
+
+<p>If argument is not a candidate, returns it as it is.<br />
+  If it&rsquo;s an active token, then returns the passive token associated with it (from tokenLookup).<br />
+  If it is a candidate, then returns a PT representing it.</p>
+
+<ul>
+<li>If a PT for the candidate exists in tokenLookup, then returns that cached value</li>
+<li>If the PT doesn&rsquo;t exist, then constructs one, adds it to tokenLookup, and returns it.</li>
+</ul>
+
+<p>Look at appendix below for implementation details.</p>
+
+<ul>
+<li>getElemFromPToken</li>
+</ul>
+
+<p>Acts as a filter for all values coming from a host resource to a client resource.</p>
+
+<p>Takes one argument.<br />
+  If it received a valid passive token:</p>
+
+<ul>
+<li>fetches and returns associated object (if this resource is the host for the PT)</li>
+<li>or reuses an AT if it exists in ATinterner (if this resource is a client for the PT)</li>
+<li>or constructs an AT (and updates ATinterner and <em>ATcache</em>) (if this resource is a client for the PT)</li>
+</ul>
+
+<p>Active tokens and non-candidates are returned without any changes.</p>
+
+<p>Look at appendix below for implementation details.</p>
+
+<ul>
+<li>getProp(client, token_id, key)</li>
+<li>setProp(client, tokenid, key, value)</li>
+<li>callFun(client, tokenid, &hellip;)</li>
+</ul>
+
+<p>Functions that are called on the host when a client attempts to get/set a value on an AT (or call an AT) that represents an original object in the host resource.</p>
+
+<p>These are actually called by bakaGaijin_export, which multiplexes these (and other functions) using opcodes.</p>
+
+<ul>
+<li>pairs, ipairs</li>
+</ul>
+
+<p>ipairs and pairs are iterators used in Lua to enumerate the keys and values of a table.</p>
+
+<p>In Lua 5.2, the <code>__pairs</code> and <code>__ipairs</code> metamethods were added, allowing us to define how pairs and ipairs should behave over a table.</p>
+
+<p>We are working in Lua 5.1 and do not have this luxury.</p>
+
+<p><code>ipairs</code> and <code>pairs</code> do not work properly over an AT.
+To make ATs behave more like tables, <code>ipairs</code> and <code>pairs</code> as global functions have been overridden (decorated) with versions that can deal with ATs.</p>
+
+<p>Specifically, when the new ipairs or pairs encounters an AT, instead of iterating over it, it calls bakaGaijin_export on the host resource with the opcode <code>pairs</code> or <code>ipairs</code>. The host resource then constructs a table of PTs and returns that, which is what pairs/ipairs iterates over.</p>
+
+<p>The original versions of pairs and ipairs are still available as raw_pairs and raw_ipairs.</p>
+
+<p>This can be observed in the source code if you search for the string</p>
+
+<pre><code class="language-lua">    ----OVERRIDES-----
+</code></pre>
+
+<p>The functions called by bakaGaijin_export when it receives <code>pairs</code> or <code>ipairs</code> as an opcode are <code>local function pairsByID(tokenid)</code> and <code>local function ipairsByID(tokenid)</code>, which can be searched for in the source.</p>
+
+<ul>
+<li>Exposed variables</li>
+</ul>
+
+<p>bakaGaijin uses metatables to provide its syntax of <code>bakaGaijin.label</code> and <code>bakaGaijin(&quot;resource&quot;).label</code></p>
+
+<p><code>bakaGaijin</code> itself has its metatable set to bakaGijin_meta</p>
+
+<pre><code class="language-lua">    local bakaGaijin_meta = {
+        __call = function(t, rec)
+            local proxy = {res_name = rec}
+            setmetatable(proxy, recmeta)
+            return proxy
+        end
+    }
+</code></pre>
+
+<p>So, <code>val = bakaGaijin.label</code> and <code>bakaGaijin.label = val</code> actually do use bakaGaijin as a raw table. <code>label</code> must not be a candidate value, care must be taken regarding this by the user. I recommend using only string or number keys, and future versions may only allow string/number keys.</p>
+
+<p>In the source code you will find a table named <code>nameCache</code>. This is actually <code>bakaGaijin</code>.</p>
+
+<p>Later in the code:
+    <code>bakaGaijin = nameCache</code></p>
+
+<p>Calling bakaGaijin as a function with argument <code>rec</code> returns an object with its key <code>res_name</code> set to <code>rec</code> and its metatable set to <code>recmeta</code></p>
+
+<pre><code class="language-lua">    local recmeta = {
+        __index = function(t, index)
+            return getElemFromPToken(exports[t.res_name]:bakaGaijin_export(&quot;s2t&quot;, index))
+        end,
+        __newindex = function()
+            error(&quot;You cannot set data for another resource.&quot;, 2)
+        end
+    }
+</code></pre>
+
+<p>Thus, if this object returned by bakaGaijin(&ldquo;someResource&rdquo;) is indexed, then it actually calls bakaGaijin_export on the host resource with the opcode <code>s2t</code> and the label key as an argument. The value returned by bakaGaijin_export is filtered using getElemFromPToken and returned to the user.</p>
+
+<p>Snippet from bakaGaijin_export:</p>
+
+<pre><code class="language-lua">    function bakaGaijin_export(typ, tokenid, stamp, ...)
+        --IN THIS CASE, TOKENID IS NOT ACTUALLY TOKENID, IT IS THE KEY THAT WAS REQUESTED
+        local sourceResource = getResourceName( sourceResource )
+        if typ==&quot;s2t&quot; then
+            return getPTokenFromElem(nameCache[tokenid])
+        --omitted: elseif ladder
+        end
+    --omitted: rest of the function
+    end
+</code></pre>
+
+<p><code>s2t</code> stands for &ldquo;String to token&rdquo;, which resolves a string to a passive token.</p>
+
+<h1 id="finally-an-explanation">Finally an explanation</h1>
+
+<p>Ok, don&rsquo;t worry if you didn&rsquo;t understand all those terms, just keep visiting the definitions as you hear them in places.</p>
+
+<p>I expect you to know how <a href="https://wiki.multitheftauto.com/wiki/Call">MTA exported functions</a> are called, how garbage collection works, and basic Lua. Knowing metatables in Lua also helps.</p>
+
+<p>Know that bakaGaijin(&ldquo;remoteResourceName&rdquo;) returns a &ldquo;special&rdquo; table (a table with something called a metatable) that, when indexed calls <code>exports[&quot;remoteResourceName&quot;]:bakaGaijin_export(&quot;get&quot;)</code> and returns the value it gets after running <em>getElemFromPT</em> on it.</p>
+
+<blockquote>
+<p>getElemFromPT?</p>
+</blockquote>
+
+<p>getElemFromPT is a function that acts as a &ldquo;filter&rdquo; of sorts. Everything that is coming to this resource from another resource goes through this filter first. Most items go through unaffected, but PTs are converted into ATs or their respective original objects.</p>
+
+<blockquote>
+<p>PT? AT? original objects?</p>
+</blockquote>
+
+<p>Original object is what the other resource &ldquo;tried&rdquo; to send to you, but could not possibly have (functions, for example)</p>
+
+<p>So we convert it into a PT instead, and the PT gets sent without any problems.</p>
+
+<p>Once we get the PT, we convert it into an AT, which is another &ldquo;special table&rdquo; (or sometimes a function) that updates the values of the original object whenever its own values are changed, or asks the other resource to call its own function when the AT is called.</p>
+
+<p>We also have a getPTfromElem function that filters everything that goes out, converting it into a PT if needed.</p>
+
+<p>EDIT: <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)">Here</a> is a wikipedia article discussing the topic (Vocabulary is different from mine)</p>
+
+<p>Here is a poorly drawn image (made on MS Paint of all things) that explains PTs and ATs</p>
+
+<p><img src="/img/PTandAT.jpg" alt="PT and AT" /></p>
+
+<p><code>&lt;function&gt; f</code> is the original object.</p>
+
+<p>The green star is the process of converting an original object to a PT.
+The blue star is the process of converting a PT to an AT.</p>
+
+<p>PT(f) is implemented as this:</p>
+
+<pre><code class="language-lua">    {
+        __gaijin_id = XYZ, --//Some number to uniquely identify function f
+        __gaijin_res = Host_Resource_Name,
+        --// (__gaijin_res, _gaijin_id) can together be used to uniquely identify an original object.
+        __gaijin_stamp = PQR, --//Some number to ensure integrity
+        __gaijin_fun = true --//Tells the client resource that the original object is a function
+    }
+</code></pre>
+
+<p>AT(f) is implemented as this:</p>
+
+<pre><code class="language-lua">    function(...)
+        return getElemFromPT(
+            exports[PT.__gaijin_res]:bakaGaijin_export(
+                &quot;call&quot;, PT.__gaijin_id, PT.__gaijin_stamp, ...)
+            );
+    end
+</code></pre>
+
+<p>An AT for a table is a bit more complicated as it uses metatables to fire callbacks for get and set operations.</p>
+
+<p>bakaGaijin_export is the only exported function and can do a lot of tasks for us depending on the first argument it gets. For example, in this case, <code>&quot;call&quot;</code> told it to call a function and return the value. Needless to say, the function parameters and return values also pass through getElemFromPT and getPTfromElem</p>
+
+<p>Also note that resources can send ATs to each other. The AT would get converted to the original PT it was calculated from, and then sent to other resources. The other resources will convert it into ATs again in their own VMs. Unless the original object belonged to one of the resources&hellip; in that case the resource would realize that the PT represents an object in its own machine and <code>getElemFromPT(PT(f))</code> would be the original object itself.</p>
+
+<h1 id="meta-garbage-collection-virtual-virtual-machine-networks-and-hacks">Meta Garbage Collection, Virtual Virtual Machine Networks and Hacks</h1>
+
+<ul>
+<li>Subscriptions</li>
+</ul>
+
+<p>I have already highlighted before, the need for a &ldquo;meta garbage collector&rdquo; in bakaGaijin.</p>
+
+<p>Since references are still alive and may be accessible when they are no longer exposed, we need to have a mechanism to delete them when no resource at all has access to them, and keep them alive otherwise.</p>
+
+<p>&hellip;ok, I can&rsquo;t type anymore. This is very tiring.</p>
+
+<p>Less reference manual, more short story now.</p>
+
+<p>Short story:</p>
+
+<p>bakaGaijin has a &ldquo;sub&rdquo; opcode that a remote resource calls when it has subscribed to a particular original object.<br />
+This subscription is stored in an internal table called <code>ownLookup</code><br />
+<code>ownLookup</code> is a multitable that maps (remoteResourceName, tokenID) to TRUE or NIL.
+TRUE meaning that remoteResource has access to original object represented by tokenID, and NIL meaning otherwise.<br />
+The subscription call is fired by the remote resource whenever getElemFromPT gets a valid PT it didn&rsquo;t already have an AT for.
+Similarly, there is an &ldquo;unsub&rdquo; opcode that unsubscribes a resource to an original object. This is called whenever the remote resource cannot access an AT anymore.</p>
+
+<p>Whenever the host resource gets an unsub for an original object, it checks if there are still any subscribers left.</p>
+
+<p>If there are no more subscribers after an unsub call (no more resources that can access the original object), then the original object is removed from gaijinPool, tokenLookup, stampLookup and ownLookup. The PT is no more, and the original object will get GCed unless the host resource itself is using it.</p>
+
+<p>Lua 5.2 has <code>__on_garbage_collect</code> metamethod that works as a destructor, and would have been used to fire unsub calls when an AT is GCed.</p>
+
+<p>However, we are on Lua 5.1, and do not have such a luxury. There is a lot more to explain.</p>
+
+<blockquote>
+<p>How do you fire unsub calls?</p>
+</blockquote>
+
+<p>This is hacky, do not try this at home.</p>
+
+<p>You already know ATinterner, it maps a token_id to an AT weakly. If the AT is GCed, then this table will not contain it anymore.</p>
+
+<p>We also have a table called ATcache (I neglected to mention it before) that maps token_id to a TRUTHY value or NIL. This table is not weak.</p>
+
+<p>ATcache is a &ldquo;shadow&rdquo; of ATinterner. For every AT that is put in ATinterner, a truthy value is also put in ATcache.</p>
+
+<p>We also have a timer that calls a function <code>updateATC</code> every <code>ATC_WAIT</code> milliseconds (Every minute by default).</p>
+
+<p>This function&hellip; wait for it&hellip;.<br />
+<em>CHECKS FOR KEYS THAT ARE TRUTHY ON <code>ATcache</code> AND FALSY ON <code>ATinterner</code>.</em></p>
+
+<p>Now before you throw tomatoes at me, let me tell you that this was the only way to do it. Lua 5.1 does not have any callbacks that we can fire on garbage collection (implemented in pure Lua).
+It is not very inefficient, don&rsquo;t worry.</p>
+
+<p>Anyway, if ATcache has a value that&rsquo;s truthy, and ATinterner has it as nil, then ATinterner dropped the value, which means it was garbage collected. This results in an unsub call.</p>
+
+<p>Now, here emerges a new problem:</p>
+
+<p>The Lua garbage collector only kicks in if the Virtual Machine is actually low on memory.<br />
+Now that we have created this&hellip; large &ldquo;<em>Virtual</em> Virtual Machine&rdquo; Network where references are shared among virtual machines&hellip; the garbage collector should not be selfish and only kick in when its own Virtual Machine is starving.</p>
+
+<p>If the client resource is under no stress, it will not fire unsub signals regardless of whether or not the host resource is under stress.</p>
+
+<p>bakaGaijin has two strategies to handle this.</p>
+
+<p>One is the most obvious: For every <code>COLLECTOR_WAITS</code> calls to updateATC, collect_garbage is called once forcing the client resource to clean up its mess. (Every 10 minutes by default)</p>
+
+<pre><code class="language-lua">    local LOAD_GAIN_TOLERANCE = 1.4
+    --If a resource keeps locking lots of objects and actually uses them, it's allowance is increased.
+    --LOAD_GAIN_TOLERANCE tells bakaGaijin how much to increase the allowance each time it's exceeded.
+    --A value of 1.4 means allowance will increase by 40%. This makes the GC elastic and dynamic.
+    local LOAD_MIN = 100 --The minimum number of items a resource is allowed to lock before it's asked to check it's actual usage and send unsub messages
+    local COLLECTOR_WAITS = 10 --Number of bakaGaijin's GC's sweeps before the Lua GC is invoked
+    local ATC_TIME = 60000 --Milliseconds between each &quot;sweep&quot; of bakaGaijin's GC
+</code></pre>
+
+<p>The second solution is much more elegant, and makes the first one unneeded (but we keep it anyway).</p>
+
+<p>There is also a table called <code>loads</code> which maps a client resource to the number of original objects (belonging to the host resource) it is subscribed to.<br />
+There is another table called <code>loadsShadow</code> which maps a client resource to the &ldquo;last known number of objects actually used&rdquo; by the client resource.</p>
+
+<p>There is a LOAD_MIN threshold the host has. Clients are not bothered until they cross this threshold.</p>
+
+<p>Once they cross this threshold, bakaGaijin_export is called on the client with the opcode <code>free</code>.
+This forces the client to call its garbage collector, and then call updateATC.
+updateATC then fires unsub messages.</p>
+
+<p>These unsub messages reach the host, which gladly accepts them.
+It then REEVALUATES the client resource&rsquo;s usage (Any objects not being used have been unsubbed at this point, so all subbed objects are being used).
+Since at this point all the objects are actually being used, loadsShadow&rsquo;s value is set to load&rsquo;s value
+<code>loadsShadow[res] = loads[res]</code>
+If there are lots of subbed objects, then the host realizes the client&rsquo;s need for more memory and a new threshold is set.
+New threshold is set as loadsShadow[res] * LOAD_GAIN_TOLERANCE(1.4 by default)</p>
+
+<p>If there are too few subs, and the allowance the client previously had is not justified anymore, then the tolerance is set to a lower level.
+Again, using the same formula loadsShadow[res] * LOAD_GAIN_TOLERANCE</p>
+
+<p>The threshold can never be lower than LOAD_MIN (100 by default), which means a client will never be bothered if it keeps less than 100 subscriptions.</p>
+
+<p>That&rsquo;s all folks&hellip; I don&rsquo;t know if you understood any of this stuff but I had a duty to document this project.</p>
+
+<p>If you still insist on understanding its workings and this page didn&rsquo;t answer all your questions, then shoot me a mail. :-]</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/project/proc-play/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Procedural Generation</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/project/fossee/">
+            <span class="next-text nav-default">FOSSEE</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'anirudh-katoch-me';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a target="_blank" href="https://www.linkedin.com/in/anirudh-katoch-b24685127/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a target="_blank" href="http://www.github.com/luca-spopo" class="iconfont icon-github" title="github"></a>
+  <a href="http://luca-spopo.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+  
+  <span class="copyright-year">
+    &copy; 
+    2017
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Anirudh Katoch</span><br>
+      <a href="mailto:katoch.anirudh@gmail.com">katoch.anirudh@gmail.com</a><br>
+      <a href="/pay/" style="font-size: 12px">Click here to send me money.</a>
+  </span>
+  <span>
+    Credits for the logos go to <a color=#c05b4d target="_blank" href="https://dribbble.com/shots/2055585-Chiyo-Dad-Emojis">Gabe from Dribble</a>.
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript">{
+  var logos = document.getElementsByClassName("logoImage")
+  logos[0].src = logosource
+  logos[1].src = logosource
+}</script>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.5"></script>
+
+
+
+
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      
+      messageStyle: 'none',
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": { availableFonts: ["TeX"] }
+    };
+
+  </script>
+
+  <script id="mathjax-script" async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+</body>
+</html>

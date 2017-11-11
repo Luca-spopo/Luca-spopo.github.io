@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://luca-spopo.github.io/sitemap.xml

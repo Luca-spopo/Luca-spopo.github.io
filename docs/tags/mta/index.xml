@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mta on Luca&#39;s Trove</title>
+    <link>http://luca-spopo.github.io/tags/mta/</link>
+    <description>Recent content in Mta on Luca&#39;s Trove</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 10 Oct 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://luca-spopo.github.io/tags/mta/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ash</title>
+      <link>http://luca-spopo.github.io/project/ash/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://luca-spopo.github.io/project/ash/</guid>
+      <description>Ash is a framework/library for MTA that gives you the most flexible and most beautiful UI. Ash does not only provide a beautiful GUI, it also aims to wrap over all other UI. For now that includes GUI, keyboard input and mouse input.
+The Problem Multitheft Auto is an open source modification of Rockstar&amp;rsquo;s very successful (and old) game Grand Theft Auto: San Andreas. It adds support for multiplayer (GTA:SA is originally single player only), and lets the server hosting the game change every aspect of the game at run time through Lua scripts that interact with hooks provided by the engine.</description>
+    </item>
+    
+  </channel>
+</rss>
