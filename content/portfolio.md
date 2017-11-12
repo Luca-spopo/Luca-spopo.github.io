@@ -2,12 +2,12 @@
 title: "Portfolio"
 date: 2017-11-11T06:17:42+05:30
 lastmod: 2017-11-11T06:17:42+05:30
-draft: true
+draft: false
 keywords: []
 description: ""
 tags: []
 categories: []
-author: ""
+author: "Luca"
 
 # you can close something for this content if you open it in config.toml.
 comment: _root

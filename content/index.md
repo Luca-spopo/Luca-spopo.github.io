@@ -2,12 +2,9 @@
 title: "Welcome"
 date: 2017-11-08T22:24:33+05:30
 lastmod: 2017-11-08T22:24:33+05:30
-draft: true
-keywords: []
-description: ""
-tags: []
-categories: []
-author: ""
+draft: false
+description: "Luca's personal website"
+author: "Luca"
 
 # you can close something for this content if you open it in config.toml.
 comment: _root

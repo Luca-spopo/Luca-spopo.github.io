@@ -2,7 +2,7 @@
 title: "Blog"
 date: 2017-11-11T06:37:24+05:30
 lastmod: 2017-11-11T06:37:24+05:30
-draft: true
+draft: false
 keywords: []
 description: ""
 tags: []
