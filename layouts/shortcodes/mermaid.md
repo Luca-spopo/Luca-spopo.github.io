@@ -1,0 +1,2 @@
+<div class="mermaid">{{ safeHTML .Inner }}
+</div>

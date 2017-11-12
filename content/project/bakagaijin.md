@@ -2,6 +2,7 @@
 title : bakaGaijin
 comment: true
 date : 2016-05-01
+mermaid: true
 summary : bakaGaijin is an open source (MIT License) library that allows seamless cross resource communication across Lua virtual machines in MTA. It allows you to pass functions, tables (by reference), and such complex types that the C interface is not actually capable of sending. It is implemented in pure Lua.
 ---
 
@@ -13,7 +14,7 @@ It aims to provide seamless cross resource communication across Lua virtual mach
 
 # Some Background
 
->[Multitheft Auto](https://github.com/multitheftauto) is an open source modification of Rockstar's very successful (and old) game Grand Theft Auto: San Andreas. It adds support for multiplayer (GTA:SA is originally single player only), and lets the server hosting the game change every aspect of the game at run time through Lua scripts that interact with hooks provided by the engine.
+>[Multitheft Auto (MTA)](https://github.com/multitheftauto) is an open source modification of Rockstar's very successful (and old) game Grand Theft Auto: San Andreas. It adds support for multiplayer (GTA:SA is originally single player only), and lets the server hosting the game change every aspect of the game at run time through Lua scripts that interact with hooks provided by the engine.
 
 For modularity, it encourages developers to split and decouple their scripts as "resources". A resource has one or more script files that run in sequence on one Lua Virtual Machine. There is exactly one VM per resource, and as such resource A does not suffer from memory leaks or crashes occurring in a resource B.
 
@@ -30,12 +31,12 @@ As two different resources sit on different VMs, the only way for them to commun
   * Tables "fetched" from element data are copied by value when sent to the VM, and thus any changes made to them do not reflect on the element data until they are manually copied back. This leads to thread safety issues that need to be stepped around.
   * MTA has an event system for these elements, and these elements form a tree that the event is propagated through.  
 
-  Thus, element data and event handlers on elements are one way of communicating with other resources.
+    Thus, element data and event handlers on elements are one way of communicating with other resources.
 
 2. MTA offers the concept of "exported" functions. A resource may declare (in its configuration files) that it is exporting certain global functions. Other resources are then allowed to call such exported functions through the syntax of `exports.remoteResourceName.functionName(exports.remoteResourceName, ...)`.
   * This changes the signature of the originally exported function, as it has an additional self parameter now.
   * The function must be declared as exported statically before the resource is loaded.
-  * The function must be global and named. Lambdas and local functions aren't allowed.
+  * The function must be global and named. Anonymous functions and local functions aren't allowed.
   * The configuration is stored in an XML file. Nobody wants to touch the XML files.
   * The parameters and return values are still stripped of any values the C interface cannot comprehend (functions, threads, tables values/keys that are functions/threads)
   * Any tables that are returned or passed as parameters are still copied by value.
@@ -438,9 +439,29 @@ We also have a getPTfromElem function that filters everything that goes out, con
 
 EDIT: <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)">Here</a> is a wikipedia article discussing the topic (Vocabulary is different from mine)
 
-Here is a poorly drawn image (made on MS Paint of all things) that explains PTs and ATs
+Here is a diagram I made that attempts to explain PTs and ATs
 
-![PT and AT](/img/PTandAT.jpg)  
+{{<mermaid>}}
+sequenceDiagram
+	participant Host
+	participant getPTfromElem
+	participant MTA
+	participant getElemFromPT
+	participant Client
+	note over Host, getPTfromElem: Host and getPTfromElem are in the virtual machine to which the object is native.
+	note over Client, getElemFromPT: Client and getElemFromPT are in the virtual machine which wants to access the object.
+	note over MTA: MTA has the C interface that connects the two virtual machines.
+	note over Host, Client: Values that are immutable and serializable (e.g numbers and strings) are sent across as they are
+	Host->>getPTfromElem :"Hello" : string
+	getPTfromElem->>MTA :"Hello" : string
+	MTA->>getElemFromPT :"Hello" : string
+	getElemFromPT->>Client :"Hello" : string
+	note over Host, Client: But non-immutable or non-serializable data is sent through a stub.
+	Host->>getPTfromElem : f : function
+	getPTfromElem->>MTA : PT(f) : (hostid, obj_id)
+	MTA->>getElemFromPT : PT(f) : (hostid, obj_id)
+	getElemFromPT->>Client : AT(f) : function
+{{</mermaid>}}
 
 `<function> f` is the original object.
 

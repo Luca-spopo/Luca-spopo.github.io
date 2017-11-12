@@ -57,6 +57,10 @@
 </script>
 {{- end }}
 
+{{- if ne .Params.mermaid false }}
+  <script src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js" type="text/javascript"></script>
+{{end}}
+
 {{- if and (and .Site.Params.mathjax (ne .Params.mathjax false)) (or .IsPage .IsHome) }}
   <script type="text/javascript">
     window.MathJax = {
