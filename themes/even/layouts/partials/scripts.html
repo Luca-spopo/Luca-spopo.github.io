@@ -57,7 +57,7 @@
 </script>
 {{- end }}
 
-{{- if ne .Params.mermaid false }}
+{{- if eq .Params.mermaid true }}
   <script src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js" type="text/javascript"></script>
 {{end}}
 
