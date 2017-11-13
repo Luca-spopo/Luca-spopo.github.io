@@ -86,7 +86,7 @@ It aims to provide seamless cross resource communication across Lua virtual mach
 
 <meta itemprop="datePublished" content="2016-05-01T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2016-05-01T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4767">
+<meta itemprop="wordCount" content="4756">
 
 
 
@@ -736,27 +736,25 @@ To make ATs behave more like tables, <code>ipairs</code> and <code>pairs</code> 
 
 <p>Here is a diagram I made that attempts to explain PTs and ATs</p>
 
-<div class="mermaid">
-sequenceDiagram
-	participant Host
-	participant getPTfromElem
-	participant MTA
-	participant getElemFromPT
-	participant Client
-	note over Host, getPTfromElem: Host and getPTfromElem are in the virtual machine to which the object is native.
-	note over Client, getElemFromPT: Client and getElemFromPT are in the virtual machine which wants to access the object.
-	note over MTA: MTA has the C interface that connects the two virtual machines.
-	note over Host, Client: Values that are immutable and serializable (e.g numbers and strings) are sent across as they are
-	Host->>getPTfromElem :"Hello" : string
-	getPTfromElem->>MTA :"Hello" : string
-	MTA->>getElemFromPT :"Hello" : string
-	getElemFromPT->>Client :"Hello" : string
-	note over Host, Client: But non-immutable or non-serializable data is sent through a stub.
-	Host->>getPTfromElem : f : function
-	getPTfromElem->>MTA : PT(f) : (hostid, obj_id)
-	MTA->>getElemFromPT : PT(f) : (hostid, obj_id)
-	getElemFromPT->>Client : AT(f) : function
-
+<div class="seqDiag">
+participant Host
+participant getPTfromElem
+participant MTA
+participant getElemFromPT
+participant Client
+note over Host, getPTfromElem: Host and getPTfromElem are\nin the virtual machine to\nwhich the object is native.
+note over Client, getElemFromPT: Client and getElemFromPT are\nin the virtual machine which\nwants to access the object.
+note over MTA: MTA has the C interface\nthat connects the\ntwo virtual machines.
+note over Host, Client: Values that are immutable and serializable (e.g numbers and strings) are sent across as they are
+Host-getPTfromElem: "Hello" : string
+getPTfromElem-MTA: "Hello" : string
+MTA-getElemFromPT: "Hello" : string
+getElemFromPT-Client: "Hello" : string
+note over Host, Client: But non-immutable or non-serializable data is sent through a stub.
+Host-getPTfromElem: f : function
+getPTfromElem-MTA: PT(f) : {hostid, obj_id}
+MTA-getElemFromPT: PT(f) : {hostid, obj_id}
+getElemFromPT-Client: AT(f) : function
 </div>
 
 <p><code>&lt;function&gt; f</code> is the original object.</p>
@@ -986,7 +984,60 @@ Again, using the same formula loadsShadow[res] * LOAD_GAIN_TOLERANCE</p>
 
 
 
-  <script src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js" type="text/javascript"></script>
+<script src="/js/webfont.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/underscore-min.js"></script>
+<script src="/js/sequence-diagram-snap-min.js"></script>
+<style>
+.sequence .actor rect {
+  fill: #ececff;
+  fill: #f4eeee;
+  stroke: #ddddfe;
+  stroke: #e4c1bd;
+}
+.sequence .note rect {
+  fill: #f8f5ec;
+}
+.sequence line {
+  stroke: #ddddfe;
+  stroke: #e4c1bd;
+}
+.sequence .signal line {
+  stroke: #000000;
+}
+</style>
+<script>
+  var seqs = document.getElementsByClassName("seqDiag")
+  for(var i=0; i<seqs.length; i++) {
+    var diagram = Diagram.parse(seqs[i].innerHTML);
+    if(!diagram) {
+      console.log("Could not parse sequence diagram number "+(i+1))
+    }
+    else
+    {
+      seqs[i].innerHTML = ""
+      let a = diagram.drawSVG(seqs[i], {theme : "simple"})
+    }
+  }
+  
+  
+  
+  setTimeout(function() {
+    for(var i=0; i<seqs.length; i++) {
+      svg = seqs[i].getElementsByClassName("sequence")[0]
+      if(svg) {
+        var tw = svg.width.animVal.valueInSpecifiedUnits
+        var th = svg.height.animVal.valueInSpecifiedUnits
+        svg.setAttribute("width", "100%")
+        svg.removeAttribute("height")
+        svg.setAttribute("viewBox", "0 0 "+tw+" "+th)
+      }
+      else
+        console.log("Could not resize svg number "+(i+1))
+    }
+  }, 2000)
+</script>
+
 
   <script type="text/javascript">
     window.MathJax = {
