@@ -58,7 +58,60 @@
 {{- end }}
 
 {{- if eq .Params.mermaid true }}
-  <script src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js" type="text/javascript"></script>
+<script src="/js/webfont.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/underscore-min.js"></script>
+<script src="/js/sequence-diagram-snap-min.js"></script>
+<style>
+.sequence .actor rect {
+  fill: #ececff;
+  fill: #f4eeee;
+  stroke: #ddddfe;
+  stroke: #e4c1bd;
+}
+.sequence .note rect {
+  fill: #f8f5ec;
+}
+.sequence line {
+  stroke: #ddddfe;
+  stroke: #e4c1bd;
+}
+.sequence .signal line {
+  stroke: #000000;
+}
+</style>
+<script>
+  var seqs = document.getElementsByClassName("seqDiag")
+  for(var i=0; i<seqs.length; i++) {
+    var diagram = Diagram.parse(seqs[i].innerHTML);
+    if(!diagram) {
+      console.log("Could not parse sequence diagram number "+(i+1))
+    }
+    else
+    {
+      seqs[i].innerHTML = ""
+      let a = diagram.drawSVG(seqs[i], {theme : "simple"})
+    }
+  }
+  //The following is a hack to get the SVGs to resize.
+  //I could use a DOM observer or change the sequence-diagram.js source
+  //to fire the following after it's done, but I'll go with this timeout for now.
+  setTimeout(function() {
+    for(var i=0; i<seqs.length; i++) {
+      svg = seqs[i].getElementsByClassName("sequence")[0]
+      if(svg) {
+        var tw = svg.width.animVal.valueInSpecifiedUnits
+        var th = svg.height.animVal.valueInSpecifiedUnits
+        svg.setAttribute("width", "100%")
+        svg.removeAttribute("height")
+        svg.setAttribute("viewBox", "0 0 "+tw+" "+th)
+      }
+      else
+        console.log("Could not resize svg number "+(i+1))
+    }
+  }, 2000)
+</script>
+<!--   <script src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js" type="text/javascript"></script> -->
 {{end}}
 
 {{- if and (and .Site.Params.mathjax (ne .Params.mathjax false)) (or .IsPage .IsHome) }}

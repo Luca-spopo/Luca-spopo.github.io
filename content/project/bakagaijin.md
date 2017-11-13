@@ -441,27 +441,26 @@ EDIT: <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)">Her
 
 Here is a diagram I made that attempts to explain PTs and ATs
 
-{{<mermaid>}}
-sequenceDiagram
-	participant Host
-	participant getPTfromElem
-	participant MTA
-	participant getElemFromPT
-	participant Client
-	note over Host, getPTfromElem: Host and getPTfromElem are in the virtual machine to which the object is native.
-	note over Client, getElemFromPT: Client and getElemFromPT are in the virtual machine which wants to access the object.
-	note over MTA: MTA has the C interface that connects the two virtual machines.
-	note over Host, Client: Values that are immutable and serializable (e.g numbers and strings) are sent across as they are
-	Host->>getPTfromElem :"Hello" : string
-	getPTfromElem->>MTA :"Hello" : string
-	MTA->>getElemFromPT :"Hello" : string
-	getElemFromPT->>Client :"Hello" : string
-	note over Host, Client: But non-immutable or non-serializable data is sent through a stub.
-	Host->>getPTfromElem : f : function
-	getPTfromElem->>MTA : PT(f) : (hostid, obj_id)
-	MTA->>getElemFromPT : PT(f) : (hostid, obj_id)
-	getElemFromPT->>Client : AT(f) : function
-{{</mermaid>}}
+{{<sequenceDiagram>}}
+participant Host
+participant getPTfromElem
+participant MTA
+participant getElemFromPT
+participant Client
+note over Host, getPTfromElem: Host and getPTfromElem are\nin the virtual machine to\nwhich the object is native.
+note over Client, getElemFromPT: Client and getElemFromPT are\nin the virtual machine which\nwants to access the object.
+note over MTA: MTA has the C interface\nthat connects the\ntwo virtual machines.
+note over Host, Client: Values that are immutable and serializable (e.g numbers and strings) are sent across as they are
+Host-getPTfromElem: "Hello" : string
+getPTfromElem-MTA: "Hello" : string
+MTA-getElemFromPT: "Hello" : string
+getElemFromPT-Client: "Hello" : string
+note over Host, Client: But non-immutable or non-serializable data is sent through a stub.
+Host-getPTfromElem: f : function
+getPTfromElem-MTA: PT(f) : {hostid, obj_id}
+MTA-getElemFromPT: PT(f) : {hostid, obj_id}
+getElemFromPT-Client: AT(f) : function
+{{</sequenceDiagram>}}
 
 `<function> f` is the original object.
 
